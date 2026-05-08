@@ -1,4 +1,4 @@
-# Hotel-Dioniso
+# Hotel-Leto
 
 
 ## 1. Descripción del proyecto
