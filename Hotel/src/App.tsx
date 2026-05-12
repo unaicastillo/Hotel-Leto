@@ -12,6 +12,6 @@ export const App = () => {
       <Route path="/historia" element={<HistoryPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-    </Routes>
+    </Routes> 
   )
 }
