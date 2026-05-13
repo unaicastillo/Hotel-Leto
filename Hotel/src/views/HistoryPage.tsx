@@ -1,12 +1,18 @@
 import React from "react";
 import { Landmark, Castle, Shield } from "lucide-react"; 
 
-import Header from "../components/layout/header/Header";
+import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import ThemeToggle from "../components/ui/ThemeToggleButton";
 import { Heading, Text } from "../components/ui/Typography";
 import Button from "../components/ui/Button";
 import "../styles/global.css";
+
+import acueducto from "../imgs/history/acueducto.png";
+import augusto from "../imgs/history/augusto.jpg";
+import museo from "../imgs/history/museo.jpg";
+import teatro from "../imgs/history/teatro.jpg";
+import templo_diana from "../imgs/history/templo_diana.jpg";
 
 export const HistoryPage = () => {
   const chronologicalData = [
@@ -47,11 +53,10 @@ export const HistoryPage = () => {
 
           {/* Sección 1: Fundación e Importancia Imperial */}
           <section className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-24 items-start">
-            <div 
-              className="md:col-span-5 h-[500px] md:h-[700px] w-full bg-cover bg-center bg-slate-200 dark:bg-slate-800 rounded-sm"
-              style={{ backgroundImage: "var(--img-augusto)" }}
-              aria-label="Estatua de Augusto"
-              role="img"
+            <img 
+              src={augusto} 
+              alt="Estatua de Augusto"
+              className="md:col-span-5 h-[500px] md:h-[700px] w-full object-cover object-center bg-slate-200 dark:bg-slate-800 rounded-sm"
             />
             <div className="md:col-span-7 bg-slate-50 dark:bg-[var(--main-card)] p-8 md:p-14 border border-[var(--main-border)] rounded-sm">
               <Heading level={2} variant="section" className="!text-3xl md:!text-4xl mb-6">
@@ -113,11 +118,10 @@ export const HistoryPage = () => {
             <div className="space-y-16">
               {/* Elemento 1: Teatro */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div 
-                  className="w-full h-[250px] md:h-[350px] bg-cover bg-center rounded-sm shadow-md"
-                  style={{ backgroundImage: "var(--img-teatro)" }}
-                  aria-label="Teatro Romano"
-                  role="img"
+                <img 
+                  src={teatro} 
+                  alt="Teatro Romano"
+                  className="w-full h-[250px] md:h-[350px] object-cover object-center rounded-sm shadow-md"
                 />
                 <div>
                   <Heading level={3} variant="card">Teatro y Anfiteatro Romano</Heading>
@@ -135,21 +139,19 @@ export const HistoryPage = () => {
                     Destacan los acueductos de Los Milagros y San Lázaro, imponentes obras de ingeniería que abastecían de agua a la ciudad romana, junto con los restos de diferentes conjuntos termales públicos y privados que ilustran la cultura del baño en la antigüedad.
                   </Text>
                 </div>
-                <div 
-                  className="w-full h-[250px] md:h-[350px] bg-cover bg-center rounded-sm shadow-md order-1 md:order-2"
-                  style={{ backgroundImage: "var(--img-acueducto)" }}
-                  aria-label="Acueducto de los Milagros"
-                  role="img"
+                <img 
+                  src={acueducto} 
+                  alt="Acueducto de los Milagros"
+                  className="w-full h-[250px] md:h-[350px] object-cover object-center rounded-sm shadow-md order-1 md:order-2"
                 />
               </div>
 
               {/* Elemento 3: Templo de Diana */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div 
-                  className="w-full h-[250px] md:h-[350px] bg-cover bg-center rounded-sm shadow-md"
-                  style={{ backgroundImage: "var(--img-templo_diana)" }}
-                  aria-label="Templo de Diana"
-                  role="img"
+                <img 
+                  src={templo_diana} 
+                  alt="Templo de Diana"
+                  className="w-full h-[250px] md:h-[350px] object-cover object-center rounded-sm shadow-md"
                 />
                 <div>
                   <Heading level={3} variant="card">Arquitectura Religiosa y Defensiva</Heading>
@@ -163,9 +165,10 @@ export const HistoryPage = () => {
 
           {/* Banner de Actividad Institucional (Museo) */}
           <section className="relative w-full h-[400px] md:h-[500px] rounded-sm overflow-hidden flex items-end justify-center pb-8 shadow-lg mt-12">
-            <div 
-              className="absolute inset-0 w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: "var(--img-museo)" }}
+            <img 
+              src={museo} 
+              alt="Museo Nacional de Arte Romano"
+              className="absolute inset-0 w-full h-full object-cover object-center"
             />
             {/* Capa superpuesta para oscurecer el fondo y asegurar legibilidad */}
             <div className="absolute inset-0 bg-black/40"></div>

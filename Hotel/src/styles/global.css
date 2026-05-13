@@ -16,6 +16,8 @@
     --brand-transparent-rust-hover: #823420;
     --brand-yellow: #f0c34f;
     --brand-yellow-hover: #dcb145;
+    --brand-green: #2e7d32;
+    --brand-red: #c62828;
 
     --bg-light: #ffffff;
     --text-main: #1c1917;
@@ -29,11 +31,6 @@
     --footer-bg: #1b1b1b;
     
     --hero-img: url("../imgs/teatro_dia.png");
-    --img-augusto: url("../imgs/history/augusto.jpg");
-    --img-acueducto: url("../imgs/history/acueducto.png");
-    --img-museo: url("../imgs/history/museo.jpg");
-    --img-teatro: url("../imgs/history/teatro.jpg");
-    --img-templo_diana: url("../imgs/history/templo_diana.jpg");
   }
 
   .dark {
@@ -73,6 +70,8 @@
     font-family: var(--font-antiqua);
   }
 
+  label { @apply block text-xs text-gray-500 font-medium}
+
 
 }
 
@@ -94,6 +93,11 @@
   .btn-primary-ghost {
     @apply bg-[var(--brand-transparent-rust)] text-white px-8 py-3 border-2 border-[var(--brand-rust-hover)] rounded hover:bg-[var(--brand-transparent-rust-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
   }
+
+  .input-primary { @apply w-full pl-10 pr-10 py-3 bg-gray-300 border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--brand-rust)] outline-none transition-all; }
+
+
+
 
   .heading-hero { @apply text-5xl md:text-7xl font-bold leading-tight max-w-3xl; font-family: var(--font-antiqua); }
   .heading-section { @apply text-4xl md:text-5xl font-bold mb-4; font-family: var(--font-antiqua); }

@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 interface AuthInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   icon: React.ElementType;
-  rightElement?: React.ReactNode; // Útil para el enlace "¿Olvidaste tu contraseña?"
+  rightElement?: React.ReactNode;
 }
 
 export const AuthInput = ({ label, icon: Icon, rightElement, type, ...props }: AuthInputProps) => {
@@ -19,12 +19,12 @@ export const AuthInput = ({ label, icon: Icon, rightElement, type, ...props }: A
         {rightElement}
       </div>
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
           <Icon size={18} />
         </div>
         <input 
           type={inputType}
-          className="w-full pl-10 pr-10 py-3 bg-gray-50 dark:bg-gray-800 border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--brand-rust)] outline-none transition-all dark:text-white"
+          className="input-primary"
           {...props}
         />
         {isPassword && (
