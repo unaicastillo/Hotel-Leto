@@ -1,34 +1,37 @@
 import React from "react";
-import { User, Mail, Lock } from "lucide-react";
-import { Layout } from "../components/ui/Layout";
-import { AuthInput } from "../components/ui/AuthInput";
+import { User, Mail, Lock, Phone } from "lucide-react";
+import { AuthLayout } from "../components/auth/AuthLayout";
+import { AuthInput } from "../components/auth/AuthInput";
 import Button from "../components/ui/Button";
+import { useRegister } from "../hooks/useRegister";
 
 export const RegisterPage = () => {
-  return (
-    <Layout 
-      title="Registrarse" 
-      footerText="¿Ya tienes cuenta?" 
-      footerLinkText="Inicia sesión" 
-      footerLinkHref="/login"
-    >
-      <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-        <AuthInput label="Nombre Completo" icon={User} type="text" placeholder="Juan Pérez" />
-        <AuthInput label="Correo Electrónico" icon={Mail} type="email" placeholder="hola@ejemplo.com" />
-        <AuthInput label="Contraseña" icon={Lock} type="password" placeholder="••••••••" />
-        
-        <div className="flex items-start mt-4">
-          <div className="flex items-center h-5">
-            <input id="terms" type="checkbox" className="h-4 w-4 text-[var(--brand-rust)] border-gray-300 rounded focus:ring-[var(--brand-rust)] cursor-pointer mt-0.5" />
-          </div>
-          <label htmlFor="terms" className="ml-2 block text-xs text-gray-600 dark:text-gray-300 cursor-pointer">
-            Acepto los <a href="#" className="text-[var(--brand-rust)] hover:underline">Términos de Servicio</a> y la <a href="#" className="text-[var(--brand-rust)] hover:underline">Política de Privacidad</a>
-          </label>
-        </div>
+  const { 
+    nombre, setNombre, apellidos, setApellidos, telefono, setTelefono,
+    email, setEmail, password, setPassword, loading, mensaje, handleRegister 
+  } = useRegister();
 
-        <Button variant="primary" className="w-full py-3.5 mt-4 rounded-md">REGISTRARSE</Button>
+  return (
+    <AuthLayout title="Registrarse" footerText="¿Ya tienes cuenta?" footerLinkText="Inicia sesión" footerLinkHref="/login">
+      <form className="space-y-4" onSubmit={handleRegister}>
+        
+        {mensaje && (
+          <div className="text-sm text-center font-medium p-3 rounded bg-blue-50 text-blue-600">
+            {mensaje}
+          </div>
+        )}
+
+        <AuthInput label="Nombre" icon={User} type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+        <AuthInput label="Apellidos" icon={User} type="text" value={apellidos} onChange={(e) => setApellidos(e.target.value)} required />
+        <AuthInput label="Teléfono" icon={Phone} type="tel" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
+        <AuthInput label="Email" icon={Mail} type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <AuthInput label="Contraseña" icon={Lock} type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+
+        <Button variant="primary" className="w-full py-3 mt-4" disabled={loading}>
+          {loading ? "REGISTRANDO..." : "REGISTRARSE"}
+        </Button>
       </form>
-    </Layout>
+    </AuthLayout>
   );
 };
 

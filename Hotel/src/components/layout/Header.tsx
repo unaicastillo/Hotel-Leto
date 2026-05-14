@@ -1,33 +1,71 @@
-import React from 'react';
-import { Menu } from 'lucide-react';
-import { Button } from '../ui/Button';
-import { Heading } from '../ui/Typography';
-import "../../styles/global.css";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { DesktopNav } from "./header_components/DesktopNav";
+import { MobileNav } from "./header_components/MobileNav";
+import logo from "../../imgs/logo_temporal.png";
+import Button from "../ui/Button";
 
-export const Header: React.FC = () => (
-  <header className="navbar container-custom">
-    {/* Título / Logo */}
-    <Heading level={3} className="text-2xl tracking-wider text-white">
-      Hotel Letoh
-    </Heading>
-    
-    {/* Navegación Desktop */}
-    <nav className="hidden md:flex gap-8 text-sm font-medium items-center text-white">
-      <a href="#" className="hover:text-gray-300 transition-colors">Eventos</a>
-      <a href="#" className="hover:text-gray-300 transition-colors">Historia</a>
-      <a href="#" className="hover:text-gray-300 transition-colors">Blog</a>
-    </nav>
+const MENU_DATA = [
+  {
+    label: "Reservas",
+    items: [
+      { label: "Reservar habitacion", url: "/" },
+      { label: "Reservar salon de eventos", url: "/" },
+    ],
+  },
+  {
+    label: "Informacion",
+    items: [
+      { label: "Habitaciones", url: "/" },
+      { label: "Cocina", url: "/" },
+      { label: "Eventos", url: "/" },
+      { label: "Instalaciones", url: "/" },
+      { label: "Historia", url: "/historia" },
+    ],
+  },
+];
 
-    {/* Botón Reserva Desktop */}
-    <div className="hidden md:block">
-      <Button variant="primary">Reserva Ahora</Button>
-    </div>
-    
-    {/* Menú Hamburguesa Mobile */}
-    <button className="md:hidden p-2">
-      <Menu className="w-6 h-6 text-white" />
-    </button>
-  </header>
-);
+export const Header = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  return (
+    <header className="header">
+      <div className="header__bar">
+        {/* Logo Section */}
+        <Link to="/" className="header__logo">  
+          <img src={logo} alt="logo hotel leto" />
+        </Link>
+
+        {/* Desktop Navigation */}
+        <DesktopNav menuItems={MENU_DATA} />
+
+        {/* Action Buttons */}
+        <div className="header__right">
+          <button 
+            className={`header__hamburger ${isMobileMenuOpen ? "header__hamburger--open" : ""}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            <span className="header__hamburger-line" />
+            <span className="header__hamburger-line" />
+            <span className="header__hamburger-line" />
+          </button>
+
+          <Button variant="primary">Iniciar sesión</Button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      <MobileNav 
+        isOpen={isMobileMenuOpen} 
+        menuItems={MENU_DATA} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+      />
+
+      <div className="header__divider" />
+
+      {/* Cart Side Panel */}
+    </header>
+  );
+}
 
 export default Header;

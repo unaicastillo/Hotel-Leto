@@ -14,9 +14,9 @@ export const Heading = ({ level = 2, variant = 'default', className = '', childr
   
   const variants = {
     hero: "text-5xl md:text-7xl font-bold leading-tight max-w-3xl",
-    section: "text-4xl md:text-5xl font-bold mb-4 text-[var(--)]",
-    card: "text-2xl font-bold mb-2 dark:text-white",
-    default: "font-bold dark:text-white"
+    section: "text-4xl md:text-5xl font-bold mb-4]",
+    card: "text-2xl font-bold mb-2",
+    default: "font-bold"
   };
 
   // Aplicamos siempre la fuente antiqua a los headings desde la variable CSS

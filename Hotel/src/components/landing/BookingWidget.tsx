@@ -13,7 +13,8 @@ export const BookingWidget: React.FC = () => (
           <div key={i} className="flex-1 border-b border[var(--main-border)]">
             <label className="text-xs font-semibold text-[var(--text-muted)] uppercase block mb-2">{item.label}</label>
             <div className="flex items-center gap-2 text-sm font-medium text-[var(--text-main)]">
-              <item.Icon className="w-5 h-5 text-[var(--brand-rust)]" /> <span>{item.val}</span>
+              <item.Icon className="w-5 h-5 text-[var(--brand-rust)]" /> 
+              <span>{item.val}</span>
             </div>
           </div>
         ))}

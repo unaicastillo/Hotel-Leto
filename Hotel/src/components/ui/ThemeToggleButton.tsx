@@ -5,7 +5,7 @@ import "../../styles/theme-toggle.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const THEME_STORAGE_KEY = "airmagic_theme";
+const THEME_STORAGE_KEY = "leto_theme";
 
 type Theme = "light" | "dark";
 

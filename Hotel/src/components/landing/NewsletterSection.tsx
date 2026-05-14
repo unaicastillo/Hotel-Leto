@@ -28,16 +28,7 @@ export const NewsletterSection = () => {
             type="email"
             placeholder="Tu correo electrónico"
             required
-            className="
-              w-full sm:w-[400px]
-              px-6 py-3.5
-              bg-white/5
-              text-white
-              border border-white/40
-              rounded-lg
-              placeholder:text-white/70
-              focus:outline-none focus:border-white focus:bg-white/10
-              transition-all duration-200
+            className="input-primary
             "
           />
 

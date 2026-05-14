@@ -1,9 +1,6 @@
-import React from 'react';
 import { Play } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { Heading, Text } from '../ui/Typography';
-import teatro_dia from "../../imgs/teatro_dia.png";
-import teatro_noche from "../../imgs/teatro_noche.jpg";
 
 export const Hero = () => {
   return (
