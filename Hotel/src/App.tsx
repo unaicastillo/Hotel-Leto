@@ -4,6 +4,8 @@ import LandingPage from './views/LandingPage';
 import HistoryPage from "./views/HistoryPage";
 import LoginPage from "./views/LoginPage";
 import RegisterPage from "./views/RegisterPage";
+import ForgotPasswordPage from "./views/ForgotPasswordPage";
+import UpdatePasswordPage from "./views/UpdatePasswordPage";
 
 export const App = () => {
   return (
@@ -12,6 +14,8 @@ export const App = () => {
       <Route path="/historia" element={<HistoryPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
+      <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+      <Route path="/update-password" element={<UpdatePasswordPage />} />
     </Routes> 
   )
 }
