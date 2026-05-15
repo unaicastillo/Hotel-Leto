@@ -6,6 +6,7 @@ import LoginPage from "./views/LoginPage";
 import RegisterPage from "./views/RegisterPage";
 import ForgotPasswordPage from "./views/ForgotPasswordPage";
 import UpdatePasswordPage from "./views/UpdatePasswordPage";
+import ReservaPage from "./views/ReservaPage";
 
 export const App = () => {
   return (
@@ -16,6 +17,7 @@ export const App = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
+      <Route path="/reserva" element={<ReservaPage />} />
     </Routes> 
   )
 }
