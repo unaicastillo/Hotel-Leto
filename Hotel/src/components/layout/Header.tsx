@@ -50,7 +50,9 @@ export const Header = () => {
             <span className="header__hamburger-line" />
           </button>
 
-          <Button variant="primary">Iniciar sesión</Button>
+          <Link to="/login">
+            <Button variant="primary">Iniciar sesión</Button>
+          </Link>
         </div>
       </div>
 

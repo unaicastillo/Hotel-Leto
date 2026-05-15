@@ -12,7 +12,7 @@ export const Hero = () => {
           Donde la historia <br/> se encuentra <br/> con el descanso
         </Heading>
         
-        <Text variant="lead" className="text[var(--text-main)] font-light">
+        <Text variant="lead" className="text-white font-light">
           Descubre la elegancia y la herencia en el corazón de Mérida.
         </Text>
         

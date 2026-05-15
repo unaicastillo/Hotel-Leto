@@ -5,8 +5,8 @@
 .header__theme-toggle {
   display: inline-flex;
   position: absolute;
-  top: 800px ;
-  /* top: calc(800px + 92vh); */
+  /* top: 800px ; */
+  top: calc(800px + 92vh);
   left: 20px;
   align-items: center;
   justify-content: center;

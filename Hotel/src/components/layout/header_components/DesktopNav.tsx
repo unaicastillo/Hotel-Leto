@@ -28,7 +28,7 @@ const Dropdown = ({ label, items }: { label: string; items: any[] }) => {
 
   return (
     <div ref={ref} className="header__dropdown">
-      <button onClick={() => setIsOpen(!isOpen)} className={`header__nav-link gap-2 ${isOpen ? "text-sky-600" : ""}`}>
+      <button onClick={() => setIsOpen(!isOpen)} className={`header__nav-link gap-2 ${isOpen ? "text-[var(--brand-rust)]" : ""}`}>
         {label} <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
       </button>
       {isOpen && (
