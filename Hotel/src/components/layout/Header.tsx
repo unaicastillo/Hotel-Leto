@@ -13,6 +13,7 @@ const MENU_DATA = [
     items: [
       { label: "Reservar habitacion", url: "/reserva" },
       { label: "Reservar salon de eventos", url: "/reserva-salón" },
+      { label: "Gestionar reservas", url: "/gestion-reserva" },
     ],
   },
   {

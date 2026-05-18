@@ -7,6 +7,7 @@ import RegisterPage from "./views/RegisterPage";
 import ForgotPasswordPage from "./views/ForgotPasswordPage";
 import UpdatePasswordPage from "./views/UpdatePasswordPage";
 import ReservaPage from "./views/ReservaPage";
+import GestionReservaPage from "./views/GestionReservaPage";
 import ProfilePage from "./views/ProfilePage";
 import { useEffect } from "react";
 
@@ -31,6 +32,7 @@ export const App = () => {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
       <Route path="/reserva" element={<ReservaPage />} />
+      <Route path="/gestion-reserva" element={<GestionReservaPage />} />
       <Route path="/perfil" element={<ProfilePage />} />
       <Route path="/info-historia" element={<HistoryPage />} />
     </Routes> 

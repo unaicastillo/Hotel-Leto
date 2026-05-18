@@ -18,8 +18,7 @@
     --brand-yellow-hover: #dcb145;
     --brand-green: #2e7d32;
     --brand-red: #c62828;
-
-    --bg-light: #ffffff;
+    --brand-red-hover: #b71c1c;
     --text-main: #1c1917;
     --text-muted: #44413d;
 
@@ -100,6 +99,11 @@
   .btn-primary-ghost {
     @apply bg-[var(--brand-transparent-rust)] text-white px-8 py-3 border-2 border-[var(--brand-rust-hover)] rounded hover:bg-[var(--brand-transparent-rust-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
   }
+
+  .btn-danger {
+    @apply bg-transparent text-[var(--brand-red)] px-8 py-3 rounded border-2 border-[var(--brand-red)] hover:bg-[var(--brand-red-hover)] hover:text-[var(--text-main)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+
 
   .input-primary { @apply w-full pl-10 pr-10 py-3 bg-[var(--input-bg)] border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--input-bg-focus)] outline-none transition-all; }
 
