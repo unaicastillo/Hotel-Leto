@@ -110,7 +110,7 @@ export const ProfilePage = () => {
         {/* Cabecera interna: Título del Perfil, Miembro y Botón de Tema */}
         <div className="flex justify-between items-start mb-8 pb-4 border-b border-gray-100 dark:border-gray-800">
           <div>
-            <Heading level={2} className="text-[var(--brand-rust)] dark:text-[var(--brand-yellow)] !text-3xl mb-1">
+            <Heading level={2} className="text-3xl mb-1">
               {profileData.nombre} {profileData.apellidos}
             </Heading>
             <Text variant="muted" className="text-xs font-medium uppercase tracking-wider">
@@ -135,9 +135,8 @@ export const ProfilePage = () => {
 
         {/* Formulario principal */}
         <form onSubmit={handleSave} className="space-y-6">
-          <Heading level={3} className="text-xs font-bold tracking-widest text-gray-400 dark:text-gray-500 uppercase">
-            Datos Personales
-          </Heading>
+
+          <Text variant="muted">Datos Personales</Text>
           
           {/* Distribución en cuadrícula de dos columnas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
@@ -151,7 +150,7 @@ export const ProfilePage = () => {
           <div className="flex gap-4 pt-4 border-t border-gray-100 dark:border-gray-800/60">
             {isEditing ? (
               <>
-                <Button variant="primary" type="submit" disabled={loading} className="flex-1 py-3 text-xs tracking-wider uppercase">
+                <Button variant="primary" type="button" disabled={loading} onClick={handleSave} className="flex-1 py-3 text-xs tracking-wider uppercase">
                   <Save size={16}/> Guardar Cambios
                 </Button>
                 <Button 
