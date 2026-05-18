@@ -1,0 +1,165 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+/* Añade esta línea para controlar el modo oscuro manualmente mediante clases */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-antiqua: 'Antiqua Modern', 'Playfair Display', 'Times New Roman', serif;
+}
+
+@layer base {
+  :root {
+    --brand-rust: #9c3f27;
+    --brand-rust-hover: #823420;
+    --brand-transparent-rust: #ffffff00;
+    --brand-transparent-rust-hover: #823420;
+    --brand-yellow: #f0c34f;
+    --brand-yellow-hover: #dcb145;
+    --brand-green: #2e7d32;
+    --brand-red: #c62828;
+    --brand-red-hover: #b71c1c;
+    --text-main: #1c1917;
+    --text-muted: #44413d;
+
+    --main-card: #ffffff;
+    --main-border: #e5e7eb;
+    --header-bg: #f9f9f91a;
+    --header-item-hover: #f9f9f95f;
+    --input-bg: #0000000a;
+    --input-bg-focus: #00000014;
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+
+    --footer-bg: #1b1b1b;
+    
+    --hero-img: url("../imgs/teatro_dia.png");
+  }
+
+  .dark {
+    --brand-rust: #c44f2E;
+    --brand-rust-hover: #a63f25;
+    --brand-transparent-rust: #ffffff00;
+    --brand-transparent-rust-hover: #a63f25;
+    --brand-yellow: #e9c349;
+    --brand-yellow-hover: #d4b23f;
+    
+    --bg-light: #1e1e1e;
+    --text-main: #f5f5f4;
+    --text-muted: #a8a29e;
+
+    --main-card: #0F0F0F;
+    --main-border: #fff;
+    --header-bg: #0000009a;
+    --header-item-hover: #00000060;
+                
+    --input-bg: #ffffff0d;
+    --input-bg-focus: #ffffff1a;
+    --overlay-bg: rgba(0, 0, 0, 0.75);
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
+
+    --footer-bg: #0C0A09;
+
+
+    --hero-img: url("../imgs/teatro_noche.jpg");
+
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+
+    @apply bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300;
+
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-antiqua);
+  }
+
+  label { @apply block text-xs text-gray-500 font-medium}
+
+
+}
+
+@layer components {
+  .container-custom { @apply max-w-7xl mx-auto px-6 lg:px-8; }
+  
+  .btn-primary {
+    @apply bg-[var(--brand-rust)] text-white px-8 py-3 rounded hover:bg-[var(--brand-rust-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+  
+  .btn-secondary {
+    @apply bg-[var(--brand-yellow)] text-[var(--text-main)] px-8 py-3 rounded hover:bg-[var(--brand-yellow-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+
+  .btn-info {
+    @apply bg-transparent text-[--text-main] px-8 py-3 rounded border-2 border-white hover:bg-white hover:text-black transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+
+  .btn-primary-ghost {
+    @apply bg-[var(--brand-transparent-rust)] text-white px-8 py-3 border-2 border-[var(--brand-rust-hover)] rounded hover:bg-[var(--brand-transparent-rust-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+
+  .btn-danger {
+    @apply bg-transparent text-[var(--brand-red)] px-8 py-3 rounded border-2 border-[var(--brand-red)] hover:bg-[var(--brand-red-hover)] hover:text-[var(--text-main)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+  }
+
+
+  .input-primary { @apply w-full pl-10 pr-10 py-3 bg-[var(--input-bg)] border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--input-bg-focus)] outline-none transition-all; }
+
+
+
+
+  .heading-hero { @apply text-5xl md:text-7xl font-bold leading-tight max-w-3xl; font-family: var(--font-antiqua); }
+  .heading-section { @apply text-4xl md:text-5xl font-bold mb-4; font-family: var(--font-antiqua); }
+  
+  .navbar { @apply absolute top-0 left-0 right-0 z-50 flex items-center justify-between py-6 bg-transparent text-[var(--text-main)] border-b border-white/20; }
+  .hero-wrapper { @apply relative w-full h-[85vh] min-h-[600px] flex items-center bg-cover bg-center; }
+  .hero-overlay { @apply absolute inset-0 bg-gradient-to-r from-black/70 to-black/30; }
+  
+  .room-card { @apply flex flex-col cursor-pointer; }
+  .room-card:hover .room-img { @apply scale-105; }
+  .room-img { @apply w-full h-full object-cover transition-transform duration-500; }
+
+
+
+
+
+
+
+
+  .header { @apply fixed top-0 z-50 w-full flex flex-col bg-[var(--header-bg)] backdrop-blur-md shadow-sm border-b border-b-gray-800; font-family: var(--font-sans); }
+  .header__bar { @apply flex items-center justify-between w-full mx-auto py-4 px-6 md:px-8; }
+  .header__logo img { @apply block h-[44px] w-auto; }
+  .header__right { @apply flex items-center gap-4; }
+  .header__divider { @apply h-px w-full bg-[var(--text-main)]; }
+  .header__nav { @apply flex items-center max-lg:hidden; }
+  .header__nav-link { @apply flex items-center px-3 text-xs font-bold tracking-widest uppercase text-[var(--text-body)] border-b-2 border-transparent cursor-pointer whitespace-nowrap transition-colors hover:text-[var(--accent-industrial)]; }
+  .header__nav-link--active { @apply text-[var(--brand-rust)] border-[var(--brand-rust)]; }
+  .header__nav-link--dropdown { @apply gap-2; }
+  .header__dropdown { @apply relative; }
+  .header__dropdown-arrow { @apply shrink-0 transition-transform duration-300; }
+  .header__nav-link--open .header__dropdown-arrow { @apply rotate-180 text-[var(--brand-rust-hover)]; }
+  .header__dropdown-menu { @apply absolute top-full left-0 z-50 min-w-[240px] bg-white border border-[var(--border-light)] rounded-sm shadow-xl overflow-hidden mt-1; }
+  .header__dropdown-item { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[var(--text-muted)] border-b transition-colors hover:bg-slate-50 hover:text-[var(--brand-rust)] last:border-none; }
+  .header__cart { @apply flex items-center justify-center p-3 bg-[var(--accent-industrial)] rounded-sm shadow-sm cursor-pointer transition-colors hover:bg-[var(--accent-industrial-hover)]; }
+  .header__hamburger { @apply hidden max-lg:flex flex-col gap-1.5 p-2 bg-transparent cursor-pointer z-50 border rounded-sm; }
+  .header__hamburger-line { @apply block w-5 h-[2px] bg-[var(--text-main)] transition-all duration-300 origin-center; }
+  .header__hamburger--open :nth-child(1) { @apply translate-y-2 rotate-45; }
+  .header__hamburger--open :nth-child(2) { @apply opacity-0; }
+  .header__hamburger--open :nth-child(3) { @apply -translate-y-2 -rotate-45; }
+  .header__mobile-nav { @apply hidden flex-col pb-4 bg-[--header-bg] border-t border-[var(--border-light)]; }
+  .header__mobile-nav--open { @apply max-lg:flex; }
+  .header__mobile-link { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[var(--text-main)] border-b border-[var(--border-light)] hover:bg-[var(--header-item-hover)] ; }
+  .header__mobile-dropdown { @apply border-b border-[var(--border-light)]; }
+  .header__mobile-trigger { @apply flex items-center justify-between w-full py-4 px-6 text-xs font-bold tracking-widest uppercase text-[var(--text-main)] bg-transparent hover:bg-[var(--header-item-hover)] ; }
+  .header__mobile-trigger--open .header__dropdown-arrow { @apply rotate-180 text-[var(--brand-rust-hover)]; }
+  .header__mobile-submenu { @apply bg-[var(--header-bg)] border-t; }
+  .header__mobile-submenu-item { @apply block py-3 px-8 text-xs font-bold uppercase tracking-widest text-[var(--text-body)] transition-colors hover:text-[var(--brand-rust-hover)]; }
+
+  /* THEME TOGGLE */
+  .header__theme-toggle { @apply inline-flex absolute top-[calc(874px+92vh)] left-5 items-center justify-center w-9 h-9 rounded-sm bg-slate-100 border border-[var(--border-light)] text-[var(--text-main)] cursor-pointer transition-all hover:bg-slate-200; }
+  .header__theme-toggle--fixed { @apply fixed top-[92vh] right-5 z-[999] left-auto shadow-md; }
+  .header__theme-toggle { @apply bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700; }
+
+}

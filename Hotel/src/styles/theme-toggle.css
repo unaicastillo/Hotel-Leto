@@ -1,0 +1,48 @@
+@import "tailwindcss";
+@tailwind utilities;
+
+
+.header__theme-toggle {
+  display: inline-flex;
+  position: absolute;
+  /* top: 800px ; */
+  top: calc(800px + 92vh);
+  left: 20px;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: var(--theme-toggle-bg);
+  border: 2px solid var(--theme-toggle-border);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+
+.header__theme-toggle:hover {
+  background: var(--theme-toggle-hover);
+}
+
+.dark .header__theme-toggle {
+  background: var(--theme-toggle-bg-dark);
+  border-color: var(--theme-toggle-border-dark);
+  color: var(--theme-toggle-color-dark);
+}
+
+.dark .header__theme-toggle:hover {
+  background: var(--theme-toggle-hover-dark);
+}
+
+.header__theme-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.header__theme-toggle--fixed {
+  position: fixed;
+  top: 92vh;
+  right: 20px;
+  z-index: 999;
+  box-shadow: var(--theme-toggle-fixed-shadow);
+}
