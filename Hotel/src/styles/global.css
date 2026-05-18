@@ -27,6 +27,8 @@
     --main-border: #e5e7eb;
     --header-bg: #f9f9f91a;
     --header-item-hover: #f9f9f95f;
+    --input-bg: #0000000a;
+    --input-bg-focus: #00000014;
     --overlay-bg: rgba(0, 0, 0, 0.6);
     --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 
@@ -51,6 +53,9 @@
     --main-border: #fff;
     --header-bg: #0000009a;
     --header-item-hover: #00000060;
+                
+    --input-bg: #ffffff0d;
+    --input-bg-focus: #ffffff1a;
     --overlay-bg: rgba(0, 0, 0, 0.75);
     --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.65);
 
@@ -96,7 +101,7 @@
     @apply bg-[var(--brand-transparent-rust)] text-white px-8 py-3 border-2 border-[var(--brand-rust-hover)] rounded hover:bg-[var(--brand-transparent-rust-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
   }
 
-  .input-primary { @apply w-full pl-10 pr-10 py-3 bg-gray-300 border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--brand-rust)] outline-none transition-all; }
+  .input-primary { @apply w-full pl-10 pr-10 py-3 bg-[var(--input-bg)] border-none rounded-md text-sm focus:ring-2 focus:ring-[var(--input-bg-focus)] outline-none transition-all; }
 
 
 

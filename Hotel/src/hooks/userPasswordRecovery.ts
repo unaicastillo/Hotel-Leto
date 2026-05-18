@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
+import { useRequireGuest } from "./useAuthGuards";
 
 // Hook para el PASO 1: Solicitar el email
 export const useForgotPassword = () => {
@@ -8,6 +9,9 @@ export const useForgotPassword = () => {
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+
+  useRequireGuest();
+
 
   const handleResetRequest = async (e: React.FormEvent) => {
     e.preventDefault();

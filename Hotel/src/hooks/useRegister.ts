@@ -1,3 +1,4 @@
+// src/hooks/useRegister.ts
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
@@ -22,7 +23,7 @@ export const useRegister = () => {
         email,
         password,
         options: {
-          data: { nombre, apellidos, telefono } // Se guardan en raw_user_meta_data
+          data: { nombre, apellidos, telefono }
         }
       });
 

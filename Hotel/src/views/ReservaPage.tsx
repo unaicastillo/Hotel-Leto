@@ -4,6 +4,9 @@ import { supabase } from "../lib/supabaseClient";
 import { Heading, Text } from "../components/ui/Typography";
 import Button from "../components/ui/Button";
 import { Calendar, User, Users, Coffee, Utensils } from "lucide-react";
+import { useRequireAuth } from "../hooks/useAuthGuards";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 export const ReservaPage = () => {
   const navigate = useNavigate();
@@ -23,6 +26,9 @@ export const ReservaPage = () => {
     { id: "doble", label: "Doble", icon: Users, cap: 2, precioBase: 140 },
     { id: "suite", label: "Familiar (Suite)", icon: Users, cap: 4, precioBase: 250 },
   ];
+
+  useRequireAuth();
+
 
   useEffect(() => {
     const checkUser = async () => {
@@ -99,6 +105,8 @@ export const ReservaPage = () => {
   const total = calcularPrecio();
 
   return (
+    <>
+    <Header />
     <div className="min-h-screen pt-24 pb-12 bg-[#faf9f8] dark:bg-[var(--bg-light)]">
       <div className="container-custom max-w-6xl">
         <Heading level={1} className="text-[var(--brand-rust)] mb-8">Tu Retiro</Heading>
@@ -215,6 +223,8 @@ export const ReservaPage = () => {
         </div>
       </div>
     </div>
+    <Footer />
+    </>
   );
 };
 

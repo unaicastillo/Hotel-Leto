@@ -15,7 +15,7 @@ export const AuthInput = ({ label, icon: Icon, rightElement, type, ...props }: A
   return (
     <div>
       <div className="flex justify-between items-center mb-1">
-        <label className="block text-xs text-gray-500 font-medium">{label}</label>
+        <label className="block text-xs text-[var(--text-main)] font-medium">{label}</label>
         {rightElement}
       </div>
       <div className="relative">
