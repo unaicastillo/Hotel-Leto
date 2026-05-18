@@ -17,8 +17,7 @@ const LandingPage = () => {
     <div className="min-h-screen bg-[var(--bg-light)] transition-colors duration-300">
       <Header />
       
-      {/* Botón flotante GSAP */}
-      <ThemeToggle />
+
 
       <Hero />
       
