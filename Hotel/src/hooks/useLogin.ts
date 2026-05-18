@@ -1,4 +1,4 @@
-// useLogin.ts corregido
+// src/hooks/useLogin.ts
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
@@ -7,6 +7,7 @@ export const useLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(true);
   const [loading, setLoading] = useState(false);
   const [mensaje, setMensaje] = useState("");
 
@@ -16,19 +17,22 @@ export const useLogin = () => {
     setMensaje("");
 
     try {
-      // Supabase busca el email y verifica la contraseña en su esquema interno 'auth'
       const { error } = await supabase.auth.signInWithPassword({ email, password });
-
       if (error) throw error;
       
+      if (!rememberMe) {
+        sessionStorage.setItem("sesion_temporal", "true");
+      } else {
+        sessionStorage.removeItem("sesion_temporal");
+      }
+
       navigate("/"); 
     } catch (error: any) {
-      // Mostramos el error real (ej: "Invalid login credentials" o "Email not confirmed")
-      setMensaje(error.message); 
+      setMensaje("Error al iniciar sesión: " + error.message); 
     } finally {
       setLoading(false);
     }
   };
 
-  return { email, setEmail, password, setPassword, loading, mensaje, handleLogin };
+  return { email, setEmail, password, setPassword, rememberMe, setRememberMe, loading, mensaje, handleLogin };
 };

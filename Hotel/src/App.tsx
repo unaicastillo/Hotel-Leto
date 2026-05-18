@@ -6,16 +6,33 @@ import LoginPage from "./views/LoginPage";
 import RegisterPage from "./views/RegisterPage";
 import ForgotPasswordPage from "./views/ForgotPasswordPage";
 import UpdatePasswordPage from "./views/UpdatePasswordPage";
+import ReservaPage from "./views/ReservaPage";
+import ProfilePage from "./views/ProfilePage";
+import { useEffect } from "react";
+
 
 export const App = () => {
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("leto_theme");
+    
+    if (savedTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/historia" element={<HistoryPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
+      <Route path="/reserva" element={<ReservaPage />} />
+      <Route path="/perfil" element={<ProfilePage />} />
+      <Route path="/info-historia" element={<HistoryPage />} />
     </Routes> 
   )
 }
