@@ -16,8 +16,6 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-light)] transition-colors duration-300">
       <Header />
-      
-
 
       <Hero />
       

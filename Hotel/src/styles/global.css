@@ -89,7 +89,7 @@
   }
   
   .btn-secondary {
-    @apply bg-[var(--brand-yellow)] text-[var(--text-main)] px-8 py-3 rounded hover:bg-[var(--brand-yellow-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+    @apply bg-[var(--brand-yellow)] text-black px-8 py-3 rounded hover:bg-[var(--brand-yellow-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
   }
 
   .btn-info {
