@@ -1,18 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { User } from "lucide-react"; // Importamos el icono de usuario
-import { supabase } from "../../lib/supabaseClient"; // Ajusta esta ruta según tu estructura
+import { User } from "lucide-react"; 
+import { supabase } from "../../lib/supabaseClient"; 
 import { DesktopNav } from "./header_components/DesktopNav";
 import { MobileNav } from "./header_components/MobileNav";
 import logo from "../../imgs/logo_temporal.png";
 import Button from "../ui/Button";
 
+// Menú principal para todos los usuarios
 const MENU_DATA = [
   {
     label: "Reservas",
     items: [
       { label: "Reservar habitacion", url: "/reserva" },
-      { label: "Reservar salon de eventos", url: "/reserva-salón" },
+      { label: "Reservar salon de eventos", url: "/reserva-salon" },
       { label: "Gestionar reservas", url: "/gestion-reserva" },
     ],
   },
@@ -28,26 +29,65 @@ const MENU_DATA = [
   },
 ];
 
+const ADMIN_MENU = {
+  label: "Admin",
+  items: [
+    { label: "Gestión de usuarios", url: "/admin/usuarios" },
+    { label: "Gestión de reservas", url: "/admin/reservas" },
+    { label: "Peticiones de reserva", url: "/admin/peticiones" },
+    { label: "Gestión de habitaciones", url: "/admin/habitaciones" },
+  ],
+};
+
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para saber si es administrador
 
   useEffect(() => {
-    // 1. Obtener la sesión actual al cargar el Header
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    // Función para obtener sesión y verificar rol
+    const fetchSessionAndRole = async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
+      
+      if (currentSession?.user) {
+        checkRole(currentSession.user.id);
+      }
+    };
 
-    // 2. Escuchar cambios de autenticación (cuando hace login o logout)
+    fetchSessionAndRole();
+
+    // Escuchar cambios de autenticación
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, currentSession) => {
       setSession(currentSession);
+      if (currentSession?.user) {
+        checkRole(currentSession.user.id);
+      } else {
+        setIsAdmin(false); // Si cierra sesión, deja de ser admin
+      }
     });
 
-    // Limpiar la suscripción al desmontar
     return () => subscription.unsubscribe();
   }, []);
+
+  // Consulta a Supabase para verificar si el usuario es "admin"
+  const checkRole = async (userId: string) => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+      
+    setIsAdmin(data?.role === "admin");
+  };
+
+  // Construimos el menú dinámicamente. 
+  // Si es admin, añade el bloque de Admin al final. Si no, usa el normal.
+  const dynamicMenuItems = useMemo(() => {
+    return isAdmin ? [...MENU_DATA, ADMIN_MENU] : MENU_DATA;
+  }, [isAdmin]);
 
   return (
     <header className="header">
@@ -57,8 +97,8 @@ export const Header = () => {
           <img src={logo} alt="logo hotel leto" />
         </Link>
 
-        {/* Desktop Navigation */}
-        <DesktopNav menuItems={MENU_DATA} />
+        {/* Desktop Navigation - Le pasamos el menú dinámico */}
+        <DesktopNav menuItems={dynamicMenuItems} />
 
         {/* Action Buttons */}
         <div className="header__right">
@@ -71,7 +111,6 @@ export const Header = () => {
             <span className="header__hamburger-line" />
           </button>
 
-          {/* Renderizado condicional de Autenticación */}
           {session ? (
             <Link 
               to="/perfil" 
@@ -88,10 +127,10 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu - Le pasamos el menú dinámico */}
       <MobileNav 
         isOpen={isMobileMenuOpen} 
-        menuItems={MENU_DATA} 
+        menuItems={dynamicMenuItems} 
         onClose={() => setIsMobileMenuOpen(false)} 
       />
 

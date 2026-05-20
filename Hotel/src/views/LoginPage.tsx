@@ -1,5 +1,3 @@
-// src/pages/LoginPage.tsx
-import React from "react";
 import { Mail, Lock } from "lucide-react";
 import { AuthLayout } from "../components/auth/AuthLayout";
 import { AuthInput } from "../components/auth/AuthInput";

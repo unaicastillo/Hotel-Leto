@@ -68,7 +68,7 @@
   body {
     font-family: 'Inter', sans-serif;
 
-    @apply bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300;
+    @apply bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300 pt-[77px];
 
   }
 
@@ -128,7 +128,7 @@
 
 
 
-  .header { @apply fixed top-0 z-50 w-full flex flex-col bg-[var(--header-bg)] backdrop-blur-md shadow-sm border-b border-b-gray-800; font-family: var(--font-sans); }
+  .header { @apply fixed top-0 z-50 w-full flex flex-col bg-[var(--header-bg)] backdrop-blur-md shadow-sm border-b border-b-gray-800 ; font-family: var(--font-sans); }
   .header__bar { @apply flex items-center justify-between w-full mx-auto py-4 px-6 md:px-8; }
   .header__logo img { @apply block h-[44px] w-auto; }
   .header__right { @apply flex items-center gap-4; }

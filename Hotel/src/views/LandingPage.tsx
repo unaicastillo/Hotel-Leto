@@ -1,8 +1,5 @@
-import React from 'react';
 import { Header } from '../components/layout/Header';
 import { Hero } from '../components/landing/Hero';
-import { BookingWidget } from '../components/landing/BookingWidget';
-import ThemeToggle from '../components/ui/ThemeToggleButton';
 import RoomsSection from '../components/landing/RoomsSection';
 import GastronomySection from '../components/landing/GastronomySection';
 import EventsSection from '../components/landing/EventSection';

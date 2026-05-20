@@ -1,4 +1,3 @@
-import React from 'react';
 import { Heading, Text } from '../ui/Typography';
 import { Button } from '../ui/Button';
 import "../../styles/global.css";

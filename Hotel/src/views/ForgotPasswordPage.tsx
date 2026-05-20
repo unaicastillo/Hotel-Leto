@@ -1,5 +1,4 @@
 // src/pages/ForgotPasswordPage.tsx
-import React from "react";
 import { Mail } from "lucide-react";
 import { AuthLayout } from "../components/auth/AuthLayout";
 import { AuthInput } from "../components/auth/AuthInput";
