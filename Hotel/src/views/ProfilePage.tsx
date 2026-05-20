@@ -6,7 +6,6 @@ import { AuthInput } from "../components/auth/AuthInput";
 import Button from "../components/ui/Button";
 import { Heading, Text } from "../components/ui/Typography";
 import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 
 export const ProfilePage = () => {
   const navigate = useNavigate();

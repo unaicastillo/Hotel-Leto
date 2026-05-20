@@ -1,4 +1,3 @@
-import React from "react";
 import { Landmark, Castle, Shield } from "lucide-react"; 
 
 import Header from "../components/layout/Header";

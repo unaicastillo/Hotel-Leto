@@ -9,15 +9,15 @@ export const Hero = () => {
       
       <div className="container-custom relative z-10 text-white mt-16">
         <Heading level={1} variant="hero" className="mb-6 text-white">
-          Donde la historia <br/> se encuentra <br/> con el descanso
+          Alojamiento en el <br/> centro histórico <br/> de Mérida
         </Heading>
         
         <Text variant="lead" className="text-white font-light">
-          Descubre la elegancia y la herencia en el corazón de Mérida.
+          Instalaciones hoteleras integradas en el entorno arqueológico de la ciudad.
         </Text>
         
         <Button variant="secondary" >
-          <Play className="w-4 h-4 fill-current" /> Reserva Virtual
+          <Play className="w-4 h-4 fill-current" /> Visita Virtual
         </Button>
       </div>
     </section>
