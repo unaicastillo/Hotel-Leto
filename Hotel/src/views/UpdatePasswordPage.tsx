@@ -1,5 +1,4 @@
-// src/pages/UpdatePasswordPage.tsx
-import React from "react";
+
 import { Lock } from "lucide-react";
 import { AuthLayout } from "../components/auth/AuthLayout";
 import { AuthInput } from "../components/auth/AuthInput";

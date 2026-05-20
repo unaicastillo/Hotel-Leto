@@ -1,4 +1,3 @@
-import React from "react";
 import { User, Mail, Lock, Phone } from "lucide-react";
 import { AuthLayout } from "../components/auth/AuthLayout";
 import { AuthInput } from "../components/auth/AuthInput";

@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
 
-// Categorías movidas aquí porque la lógica de precios las necesita
 export const categorias = [
   { id: "individual", cap: 1, precioBase: 90 },
   { id: "doble", cap: 2, precioBase: 140 },
@@ -22,20 +21,17 @@ export const useReserva = () => {
   const [huespedes, setHuespedes] = useState(2);
   const [servicios, setServicios] = useState<string[]>([]);
 
-  // 1. Obtener usuario actual
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) setUsuarioId(user.id);
     });
   }, []);
 
-  // 2. Reajustar huéspedes si se cambia a una habitación más pequeña
   useEffect(() => {
     const maxCapacidad = categorias.find(c => c.id === tipo)?.cap || 1;
     if (huespedes > maxCapacidad) setHuespedes(maxCapacidad);
   }, [tipo, huespedes]);
 
-  // 3. Manejadores de Fechas (Helpers)
   const getFechaMaximaSalida = () => {
     if (!fechaEntrada) return "";
     const f = new Date(fechaEntrada);
@@ -64,20 +60,26 @@ export const useReserva = () => {
     }
   };
 
-  // 4. Cálculos de precios y días
   const calcularNoches = () => {
     if (!fechaEntrada || !fechaSalida) return 0;
     return Math.ceil((new Date(fechaSalida).getTime() - new Date(fechaEntrada).getTime()) / (1000 * 60 * 60 * 24));
   };
 
+  // Cálculo exacto con los precios de la base de datos
+  const calcularCostoExtras = () => {
+    let costoExtras = 0;
+    if (servicios.includes("Desayuno Buffet")) costoExtras += 25;
+    if (servicios.includes("Media Pensión")) costoExtras += 45;
+    return costoExtras;
+  };
+
   const noches = calcularNoches();
-  const total = noches > 0 ? (categorias.find(c => c.id === tipo)!.precioBase + (servicios.length * 25)) * noches : 0;
+  const total = noches > 0 ? (categorias.find(c => c.id === tipo)!.precioBase + calcularCostoExtras()) * noches : 0;
 
   const toggleServicio = (servicio: string) => {
     setServicios(prev => prev.includes(servicio) ? prev.filter(s => s !== servicio) : [...prev, servicio]);
   };
 
-  // 5. Envío a Base de Datos
   const handleReservar = async () => {
     if (!fechaEntrada || !fechaSalida) return setMensaje("Por favor, selecciona las fechas.");
     if (noches <= 0) return setMensaje("La fecha de salida debe ser posterior a la de entrada.");
@@ -94,10 +96,34 @@ export const useReserva = () => {
         setLoading(false); return;
       }
 
-      const { error: errInsert } = await supabase.from("reservas").insert({
-        usuario_id: usuarioId, habitacion_id: habId, fecha_entrada: fechaEntrada, fecha_salida: fechaSalida, precio: total, servicios: servicios, estado: "pendiente"
-      });
+      // 1. Insertamos la reserva (usando precio_total y sin el array de servicios)
+      const { data: nuevaReserva, error: errInsert } = await supabase.from("reservas").insert({
+        usuario_id: usuarioId, 
+        habitacion_id: habId, 
+        fecha_entrada: fechaEntrada, 
+        fecha_salida: fechaSalida, 
+        precio_total: total, 
+        estado: "pendiente"
+      }).select('id').single();
+
       if (errInsert) throw errInsert;
+
+      // 2. Si hay extras, los guardamos en la tabla puente
+      if (servicios.length > 0 && nuevaReserva) {
+        const { data: serviciosDB } = await supabase.from('servicios').select('id, precio').in('nombre', servicios);
+        
+        if (serviciosDB) {
+          const extrasAInsertar = serviciosDB.map(srv => ({
+            reserva_id: nuevaReserva.id,
+            servicio_id: srv.id,
+            precio_unitario: srv.precio,
+            cantidad: noches // El servicio se multiplica por las noches
+          }));
+
+          const { error: errServicios } = await supabase.from('reservas_servicios').insert(extrasAInsertar);
+          if (errServicios) throw errServicios;
+        }
+      }
 
       navigate("/");
       setMensaje("¡Reserva confirmada con éxito!");

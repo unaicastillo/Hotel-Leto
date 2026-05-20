@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Text } from "../ui/Typography"; 
+import { Text } from "../ui/Typography"; 
 import "../../styles/global.css";
 import { Link } from "react-router-dom";
 import logo from "../../imgs/logo_temporal.png";

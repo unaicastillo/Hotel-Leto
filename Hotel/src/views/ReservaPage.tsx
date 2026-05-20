@@ -1,4 +1,3 @@
-import React from "react";
 import { Heading, Text } from "../components/ui/Typography";
 import Button from "../components/ui/Button";
 import { Calendar, User, Users, Coffee, Utensils } from "lucide-react";
@@ -7,7 +6,6 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import { useReserva, categorias } from "../hooks/useReserva";
 
-// Definición estática para la UI
 const uiCategorias = [
   { id: "individual", label: "Individual", icon: User },
   { id: "doble", label: "Doble", icon: Users },
@@ -15,7 +13,7 @@ const uiCategorias = [
 ];
 
 export const ReservaPage = () => {
-  useRequireAuth(); // Protege la ruta
+  useRequireAuth();
 
   const {
     fechaEntrada, handleCambioEntrada, fechaSalida, setFechaSalida,
@@ -41,7 +39,6 @@ export const ReservaPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           <div className="lg:col-span-2 space-y-6">
             
-            {/* Fechas */}
             <div className="bg-white dark:bg-[var(--main-card)] p-6 rounded-xl shadow-sm border border-[var(--main-border)]">
               <Heading level={3} variant="default" className="mb-4 text-lg">Fechas de Estancia (Máx. 7 Noches)</Heading>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -57,13 +54,11 @@ export const ReservaPage = () => {
                   <div className="relative mt-1">
                     <Calendar className="absolute left-3 top-3 text-gray-400 w-5 h-5" />
                     <input type="date" className="input-primary pl-10 disabled:opacity-50" value={fechaSalida} onChange={e => setFechaSalida(e.target.value)} min={getFechaMinimaSalida()} max={getFechaMaximaSalida()} disabled={!fechaEntrada} />
-                    
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Categoría */}
             <div className="bg-white dark:bg-[var(--main-card)] p-6 rounded-xl shadow-sm border border-[var(--main-border)]">
               <Heading level={3} variant="default" className="mb-4 text-lg">Categoría de Habitación</Heading>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -89,13 +84,12 @@ export const ReservaPage = () => {
               </div>
             </div>
 
-            {/* Extras */}
             <div className="bg-white dark:bg-[var(--main-card)] p-6 rounded-xl shadow-sm border border-[var(--main-border)]">
               <Heading level={3} variant="default" className="mb-4 text-lg">Añadidos Gastronómicos</Heading>
               <div className="space-y-3">
                 {[
-                  { id: "desayuno", label: "Desayuno Buffet", desc: "Comienza tu día con repostería artesanal local.", icon: Coffee },
-                  { id: "media_pension", label: "Media Pensión (Comida)", desc: "Incluye almuerzo de tres platos en nuestro restaurante.", icon: Utensils }
+                  { id: "Desayuno Buffet", label: "Desayuno Buffet", desc: "Comienza tu día con repostería artesanal local.", icon: Coffee },
+                  { id: "Media Pensión", label: "Media Pensión (Comida)", desc: "Incluye almuerzo de tres platos en nuestro restaurante.", icon: Utensils }
                 ].map((extra) => (
                   <label key={extra.id} className="flex items-start p-4 border border-gray-200 dark:border-gray-700 rounded-lg cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors">
                     <input type="checkbox" className="mt-1 mr-4 w-5 h-5 accent-[var(--brand-rust)] cursor-pointer" checked={servicios.includes(extra.id)} onChange={() => toggleServicio(extra.id)} />
@@ -110,7 +104,6 @@ export const ReservaPage = () => {
 
           </div>
 
-          {/* Resumen */}
           <div className="lg:col-span-1">
             <div className="bg-[#2A2624] text-white rounded-xl overflow-hidden sticky top-24 shadow-xl">
               <div className="h-48 overflow-hidden relative">

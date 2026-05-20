@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowRight, Quote } from 'lucide-react';
 import { Heading, Text } from '../ui/Typography';
 import "../../styles/global.css";
