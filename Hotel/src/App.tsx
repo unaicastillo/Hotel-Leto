@@ -7,6 +7,7 @@ import RegisterPage from "./views/RegisterPage";
 import ForgotPasswordPage from "./views/ForgotPasswordPage";
 import UpdatePasswordPage from "./views/UpdatePasswordPage";
 import ReservationPage from "./views/ReservationPage";
+import AIChatPage from "./views/AIChatPage";
 import GestionReservaPage from "./views/GestionReservaPage";
 import ProfilePage from "./views/ProfilePage";
 import ReservaSalonPage from "./views/ReservaSalonPage";
@@ -36,6 +37,7 @@ export const App = () => {
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
       <Route path="/reserva" element={<ReservationPage />} />
+      <Route path="/reserva-inteligente" element={<AIChatPage />} />
       <Route path="/gestion-reserva" element={<GestionReservaPage />} />
       <Route path="/perfil" element={<ProfilePage />} />
       <Route path="/reserva-salon" element={<ReservaSalonPage />} />
