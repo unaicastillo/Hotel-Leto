@@ -2,8 +2,10 @@ import { Send, Bot, User, Sparkles } from 'lucide-react';
 import { useAIChat } from '../hooks/useAIChat';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import { useRequireAuth } from '../hooks/useAuthGuards';
 
 export default function AIChatPage() {
+  useRequireAuth();
   const { mensajes, inputUsuario, setInputUsuario, enviarMensaje, chatContainerRef, escribiendo } = useAIChat();
 
   return (
