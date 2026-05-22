@@ -33,7 +33,7 @@ const ADMIN_MENU = {
   label: "Admin",
   items: [
     { label: "Gestión de usuarios", url: "/admin/users" },
-    { label: "Gestión de reservas", url: "/admin/reservas" },
+    { label: "Gestión de reservas", url: "/admin/gestion-reservas" },
     { label: "Peticiones de reserva", url: "/admin/peticiones" },
     { label: "Gestión de habitaciones", url: "/admin/rooms" },
   ],
