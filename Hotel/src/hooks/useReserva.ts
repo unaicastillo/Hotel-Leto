@@ -21,6 +21,10 @@ export const useReserva = () => {
   const [huespedes, setHuespedes] = useState(2);
   const [servicios, setServicios] = useState<string[]>([]);
 
+  // NUEVOS ESTADOS PARA STRIPE
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [reservaIdActual, setReservaIdActual] = useState<number | null>(null);
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       if (user) setUsuarioId(user.id);
@@ -65,7 +69,6 @@ export const useReserva = () => {
     return Math.ceil((new Date(fechaSalida).getTime() - new Date(fechaEntrada).getTime()) / (1000 * 60 * 60 * 24));
   };
 
-  // Cálculo exacto con los precios de la base de datos
   const calcularCostoExtras = () => {
     let costoExtras = 0;
     if (servicios.includes("Desayuno Buffet")) costoExtras += 25;
@@ -80,13 +83,15 @@ export const useReserva = () => {
     setServicios(prev => prev.includes(servicio) ? prev.filter(s => s !== servicio) : [...prev, servicio]);
   };
 
-  const handleReservar = async () => {
+const handleReservar = async () => {
     if (!fechaEntrada || !fechaSalida) return setMensaje("Por favor, selecciona las fechas.");
     if (noches <= 0) return setMensaje("La fecha de salida debe ser posterior a la de entrada.");
     if (noches > 7) return setMensaje("La reserva máxima permitida es de 7 noches.");
     
     setLoading(true);
     setMensaje("");
+
+    let reservaIdCreada: number | null = null; // Guardamos el ID temporalmente para poder borrarlo si falla
 
     try {
       const { data: habId, error: errRpc } = await supabase.rpc('buscar_habitacion_libre', { p_tipo: tipo, p_entrada: fechaEntrada, p_salida: fechaSalida });
@@ -96,7 +101,7 @@ export const useReserva = () => {
         setLoading(false); return;
       }
 
-      // 1. Insertamos la reserva (usando precio_total y sin el array de servicios)
+      // 1. Insertamos la reserva (estado "pendiente")
       const { data: nuevaReserva, error: errInsert } = await supabase.from("reservas").insert({
         usuario_id: usuarioId, 
         habitacion_id: habId, 
@@ -107,9 +112,12 @@ export const useReserva = () => {
       }).select('id').single();
 
       if (errInsert) throw errInsert;
+      
+      // Guardamos el ID por si tenemos que dar marcha atrás
+      reservaIdCreada = nuevaReserva.id;
 
-      // 2. Si hay extras, los guardamos en la tabla puente
-      if (servicios.length > 0 && nuevaReserva) {
+      // 2. Si hay extras, los guardamos
+      if (servicios.length > 0) {
         const { data: serviciosDB } = await supabase.from('servicios').select('id, precio').in('nombre', servicios);
         
         if (serviciosDB) {
@@ -117,7 +125,7 @@ export const useReserva = () => {
             reserva_id: nuevaReserva.id,
             servicio_id: srv.id,
             precio_unitario: srv.precio,
-            cantidad: noches // El servicio se multiplica por las noches
+            cantidad: noches
           }));
 
           const { error: errServicios } = await supabase.from('reservas_servicios').insert(extrasAInsertar);
@@ -125,9 +133,27 @@ export const useReserva = () => {
         }
       }
 
-      navigate("/");
-      setMensaje("¡Reserva confirmada con éxito!");
+      // 3. Llamar a la Edge Function de Supabase para iniciar el pago
+      const { data: stripeData, error: stripeError } = await supabase.functions.invoke('crear-pago-stripe', {
+        body: { precioTotal: total }
+      });
+
+      // 4. VERIFICACIÓN Y ROLLBACK (Limpieza si falla Stripe)
+      if (stripeError || !stripeData?.clientSecret) {
+        // Borramos la reserva de la base de datos porque el pago no se puede iniciar
+        await supabase.from("reservas").delete().eq("id", nuevaReserva.id);
+        throw new Error("Error del servidor: No se pudo conectar con la pasarela de pago. Inténtalo más tarde.");
+      }
+
+      // 5. Todo ha ido bien, preparamos la vista de pago
+      setReservaIdActual(nuevaReserva.id);
+      setClientSecret(stripeData.clientSecret);
+
     } catch (error: any) {
+      // Si en el bloque catch comprobamos que la reserva se creó pero algo falló después, intentamos borrarla por seguridad
+      if (reservaIdCreada) {
+        await supabase.from("reservas").delete().eq("id", reservaIdCreada);
+      }
       setMensaje(error.message || "Error al procesar la reserva.");
     } finally {
       setLoading(false);
@@ -139,6 +165,8 @@ export const useReserva = () => {
     getFechaMinimaSalida, getFechaMaximaSalida,
     tipo, setTipo, huespedes, setHuespedes,
     servicios, toggleServicio,
-    loading, mensaje, total, noches, handleReservar
+    loading, mensaje, total, noches, handleReservar,
+    // Exportamos los nuevos estados
+    clientSecret, reservaIdActual, setMensaje
   };
 };

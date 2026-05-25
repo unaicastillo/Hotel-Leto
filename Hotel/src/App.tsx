@@ -14,6 +14,7 @@ import ReservaSalonPage from "./views/ReservaSalonPage";
 import UserManagementPage from "./views/UserManagementPage";
 import RoomManagementPage from "./views/RoomManagementPage";
 import ReservationManagementPage from "./views/ReservationManagementPage";
+import CreateUserPage from "./views/CreateUserPage";
 import { useEffect } from "react";
 
 
@@ -46,6 +47,7 @@ export const App = () => {
       <Route path="/admin/users" element={<UserManagementPage />} />
       <Route path="/admin/rooms" element={<RoomManagementPage />} />
       <Route path="/admin/gestion-reservas" element={<ReservationManagementPage />} />
+      <Route path="/admin/create-user" element={<CreateUserPage />} />
       <Route path="/admin/habitaciones" element={<UserManagementPage />} />
     </Routes> 
   )

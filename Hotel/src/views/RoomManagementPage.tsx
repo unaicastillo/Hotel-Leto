@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { 
   Search, 
   AlertTriangle, 
@@ -10,8 +9,12 @@ import {
 import { useRoomManagement } from '../hooks/useRoomManagement';
 import Footer from '../components/layout/Footer';
 import Header from '../components/layout/Header';
+import { useRequireAdmin } from '../hooks/useAuthGuards';
 
 export default function RoomManagementPage() {
+
+  useRequireAdmin();
+
   const {
     habitaciones,
     habitacionesFiltradas,

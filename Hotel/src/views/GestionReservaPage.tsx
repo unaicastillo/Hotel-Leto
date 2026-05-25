@@ -6,19 +6,31 @@ import Button from "../components/ui/Button";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import handleDescargarFactura from "../hooks/pdfGenerator";
-import { Calendar, FileText, XCircle, Clock, CheckCircle, AlertTriangle } from "lucide-react";
+import { Calendar, FileText, XCircle, Clock, CheckCircle, AlertTriangle, CreditCard, X } from "lucide-react";
+
+// --- IMPORTACIONES DE STRIPE ---
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import { CheckoutForm } from '../components/ui/CheckOutForm'; // Asegúrate de que la ruta sea correcta
+
+// ⚠️ Pon tu Clave Pública de Stripe aquí
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 export const MisReservasPage = () => {
   useRequireAuth();
   const [reservas, setReservas] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // --- NUEVOS ESTADOS PARA STRIPE ---
+  const [procesandoPagoId, setProcesandoPagoId] = useState<number | null>(null);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [reservaAPagar, setReservaAPagar] = useState<any | null>(null);
+
   useEffect(() => {
     const fetchReservas = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
       
-      // JOIN actualizado: Traemos habitaciones y los servicios vinculados
       const { data } = await supabase
         .from("reservas")
         .select(`
@@ -50,6 +62,39 @@ export const MisReservasPage = () => {
     if (!error) {
       setReservas(prev => prev.map(r => r.id === id ? { ...r, estado: "cancelada" } : r));
     }
+  };
+
+  // --- LÓGICA PARA INICIAR EL PAGO ---
+  const handleIniciarPago = async (reserva: any) => {
+    setProcesandoPagoId(reserva.id);
+    try {
+      const { data: stripeData, error: stripeError } = await supabase.functions.invoke('crear-pago-stripe', {
+        body: { precioTotal: reserva.precio_total }
+      });
+
+      if (stripeError || !stripeData?.clientSecret) {
+        throw new Error("No se pudo conectar con la pasarela de pago.");
+      }
+
+      setClientSecret(stripeData.clientSecret);
+      setReservaAPagar(reserva);
+    } catch (error) {
+      alert("Error al iniciar el pago. Inténtalo de nuevo más tarde.");
+      console.error(error);
+    } finally {
+      setProcesandoPagoId(null);
+    }
+  };
+
+  // --- FUNCIÓN QUE SE EJECUTA CUANDO EL PAGO SE COMPLETA ---
+  const handlePagoCompletado = () => {
+    // Actualizamos visualmente la reserva a "confirmada" sin tener que recargar la página
+    setReservas(prev => prev.map(r => r.id === reservaAPagar.id ? { ...r, estado: "confirmada" } : r));
+    alert("¡Pago completado con éxito! Tu reserva ha sido confirmada.");
+    
+    // Cerramos el modal
+    setClientSecret(null);
+    setReservaAPagar(null);
   };
 
   if (loading) return <div className="min-h-screen bg-[#faf9f8] dark:bg-[var(--bg-light)] pt-32 text-center">Cargando tus retiros...</div>;
@@ -96,23 +141,37 @@ export const MisReservasPage = () => {
 
                       <div className="flex gap-6 text-sm text-gray-500 dark:text-gray-400 flex-wrap">
                         <span className="flex items-center gap-1.5"><Calendar size={16} className="text-[var(--brand-rust)]"/> {reserva.fecha_entrada} al {reserva.fecha_salida}</span>
-                        {/* Se actualizó a precio_total */}
                         <span className="font-bold text-[var(--text-main)]">€{reserva.precio_total}</span>
                       </div>
                     </div>
 
                     <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-3 w-full md:w-auto border-t md:border-t-0 pt-4 md:pt-0 border-gray-100 dark:border-gray-800">
+                      
+                      {/* BOTÓN DE PAGAR AHORA (Solo si está pendiente) */}
+                      {reserva.estado === "pendiente" && puedeGestionar && (
+                        <Button 
+                          variant="primary" 
+                          className="text-xs !py-2.5 flex items-center justify-center gap-1.5 flex-1 bg-green-600 hover:bg-green-700 border-none text-white" 
+                          onClick={() => handleIniciarPago(reserva)}
+                          disabled={procesandoPagoId === reserva.id}
+                        >
+                          <CreditCard size={14} /> 
+                          {procesandoPagoId === reserva.id ? "Conectando..." : "Pagar Ahora"}
+                        </Button>
+                      )}
+
                       {puedeGestionar ? (
                         <Button variant="danger" className="text-xs !py-2.5 flex-1" onClick={() => handleCancelar(reserva.id)}>Cancelar Reserva</Button>
                       ) : (
                         reserva.estado !== "cancelada" && (
                           <div className="text-xs text-amber-600 dark:text-amber-400 font-medium bg-amber-50 dark:bg-amber-950/20 px-3 py-2 rounded-lg flex items-center gap-1.5 max-w-xs">
-                            <AlertTriangle size={14} /> Fuera de plazo de modificación (48h de antelación obligatorias)
+                            <AlertTriangle size={14} /> Fuera de plazo de modificación
                           </div>
                         )
                       )}
-                      <Button variant="primary" className="text-xs !py-2.5 flex items-center justify-center gap-1.5 w-full sm:w-auto" onClick={() => handleDescargarFactura(reserva)}>
-                        <FileText size={14} /> Factura PDF
+                      
+                      <Button variant="info" className="text-xs !py-2.5 flex items-center justify-center gap-1.5 w-full sm:w-auto" onClick={() => handleDescargarFactura(reserva)}>
+                        <FileText size={14} /> Factura
                       </Button>
                     </div>
                   </div>
@@ -123,6 +182,36 @@ export const MisReservasPage = () => {
         </div>
       </div>
       <Footer />
+
+      {/* --- MODAL FLOTANTE PARA STRIPE --- */}
+      {clientSecret && reservaAPagar && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
+          <div className="bg-white dark:bg-[var(--main-card)] p-6 md:p-8 rounded-2xl shadow-2xl max-w-md w-full relative">
+            
+            {/* Botón para cerrar el modal */}
+            <button 
+              onClick={() => { setClientSecret(null); setReservaAPagar(null); }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              <X size={24} />
+            </button>
+
+            <Heading level={3} className="mb-1">Completar Pago</Heading>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 pb-4 border-b border-[var(--main-border)]">
+              Reserva <strong>#{reservaAPagar.id}</strong> — Total: <strong className="text-[var(--brand-rust)]">€{reservaAPagar.precio_total}</strong>
+            </p>
+
+            <Elements stripe={stripePromise} options={{ clientSecret }}>
+              <CheckoutForm 
+                reservaId={reservaAPagar.id} 
+                precioTotal={reservaAPagar.precio_total} 
+                onPagoExitoso={handlePagoCompletado} 
+              />
+            </Elements>
+
+          </div>
+        </div>
+      )}
     </>
   );
 };

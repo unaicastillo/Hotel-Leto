@@ -4,8 +4,11 @@ import { Search, Mail, AlignLeft, Send, Calendar, User, ShieldAlert, CheckCircle
 import { useReservationManagement } from '../hooks/useReservationManagement';
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
+import { useRequireAdmin } from '../hooks/useAuthGuards';
 
 export default function ReservationManagementPage() {
+
+  useRequireAdmin();
   const {
     cargando,
     reservas,
