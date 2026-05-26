@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 // IMPORTACIONES DE STRIPE (Asegúrate de ajustar la ruta del CheckoutForm)
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { CheckoutForm } from '../components/ui/CheckOutForm'; 
+import { CheckoutForm } from "../components/ui/CheckoutForm"; 
 
 // ⚠️ CARGAR STRIPE FUERA DEL COMPONENTE (Usa tu Clave Pública "pk_test_...")
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
