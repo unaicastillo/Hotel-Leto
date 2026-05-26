@@ -14,6 +14,7 @@ import ReservaSalonPage from "./views/ReservaSalonPage";
 import UserManagementPage from "./views/UserManagementPage";
 import RoomManagementPage from "./views/RoomManagementPage";
 import ReservationManagementPage from "./views/ReservationManagementPage";
+import ReservationEventRoomPage from "./views/ReservationEventRoomPage";
 import CreateUserPage from "./views/CreateUserPage";
 import { useEffect } from "react";
 
@@ -41,12 +42,13 @@ export const App = () => {
       <Route path="/reserva-inteligente" element={<AIChatPage />} />
       <Route path="/gestion-reserva" element={<GestionReservaPage />} />
       <Route path="/perfil" element={<ProfilePage />} />
-      <Route path="/reserva-salon" element={<ReservaSalonPage />} />
+      <Route path="/reservation-event-room" element={<ReservaSalonPage />} />
       <Route path="/info-historia" element={<HistoryPage />} />
       {/* Admin */}
       <Route path="/admin/users" element={<UserManagementPage />} />
       <Route path="/admin/rooms" element={<RoomManagementPage />} />
       <Route path="/admin/gestion-reservas" element={<ReservationManagementPage />} />
+      <Route path="/admin/reservation-event-room" element={<ReservationEventRoomPage />} />
       <Route path="/admin/create-user" element={<CreateUserPage />} />
       <Route path="/admin/habitaciones" element={<UserManagementPage />} />
     </Routes> 

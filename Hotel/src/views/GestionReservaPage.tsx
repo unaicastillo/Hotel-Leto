@@ -11,8 +11,7 @@ import { Calendar, FileText, XCircle, Clock, CheckCircle, AlertTriangle, CreditC
 // --- IMPORTACIONES DE STRIPE ---
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
-import { CheckoutForm } from '../components/ui/CheckOutForm'; // Asegúrate de que la ruta sea correcta
-
+import { CheckoutForm } from "../components/ui/CheckOutForm";
 // ⚠️ Pon tu Clave Pública de Stripe aquí
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 

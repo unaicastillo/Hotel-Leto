@@ -14,7 +14,7 @@ const MENU_DATA = [
     items: [
       { label: "Reservar habitacion", url: "/reserva" },
       { label: "Reserva de habitacion inteligente", url: "/reserva-inteligente" },
-      { label: "Reservar salon de eventos", url: "/reserva-salon" },
+      { label: "Reservar salon de eventos", url: "/reservation-event-room" },
       { label: "Gestionar reservas", url: "/gestion-reserva" },
     ],
   },
@@ -35,8 +35,8 @@ const ADMIN_MENU = {
   items: [
     { label: "Gestión de usuarios", url: "/admin/users" },
     { label: "Gestión de reservas", url: "/admin/gestion-reservas" },
-    { label: "Peticiones de reserva", url: "/admin/peticiones" },
     { label: "Crear usuario", url: "/admin/create-user" },
+    { label: "Realizar reserva salón de eventos", url: "/admin/reservation-event-room" },
     { label: "Gestión de habitaciones", url: "/admin/rooms" },
   ],
 };
