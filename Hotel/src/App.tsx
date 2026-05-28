@@ -16,7 +16,6 @@ import RoomManagementPage from "./views/RoomManagementPage";
 import ReservationManagementPage from "./views/ReservationManagementPage";
 import ReservationEventRoomPage from "./views/ReservationEventRoomPage";
 import CreateUserPage from "./views/CreateUserPage";
-import VerificationPage from "./views/VerificationPage";
 import { useEffect } from "react";
 
 
@@ -44,7 +43,6 @@ export const App = () => {
       <Route path="/my-reservations" element={<MyReservationsPage />} />
       <Route path="/profile" element={<ProfilePage />} />
       <Route path="/reservation-event-room" element={<ReserveEventRoom />} />
-      <Route path="/verification" element={<VerificationPage />} />
       {/* Informacion */} 
       <Route path="/history-info" element={<HistoryPage />} />
       {/* Admin */}
