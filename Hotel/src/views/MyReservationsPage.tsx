@@ -203,7 +203,8 @@ export const MyReservationsPage = () => {
       {/* --- MODAL FLOTANTE PARA STRIPE --- */}
       {clientSecret && reservaAPagar && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn">
-          <div className="bg-white dark:bg-[var(--main-card)] p-6 md:p-8 rounded-2xl shadow-2xl max-w-md w-full relative">
+          {/* ✅ LA SOLUCIÓN ESTÁ AQUÍ: max-h-[90vh] y overflow-y-auto */}
+          <div className="bg-white dark:bg-[var(--main-card)] p-6 md:p-8 rounded-2xl shadow-2xl max-w-md w-full relative max-h-[90vh] overflow-y-auto">
             
             {/* Botón para cerrar el modal */}
             <button 
