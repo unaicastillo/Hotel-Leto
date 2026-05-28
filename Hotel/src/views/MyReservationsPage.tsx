@@ -7,7 +7,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import handleDescargarFactura from "../hooks/pdfGenerator";
 import { Calendar, FileText, XCircle, Clock, CheckCircle, AlertTriangle, CreditCard, X } from "lucide-react";
-
+import { emailService } from "../services/emailService";
 // --- IMPORTACIONES DE STRIPE ---
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
@@ -57,9 +57,27 @@ export const MisReservasPage = () => {
 
   const handleCancelar = async (id: number) => {
     if (!window.confirm("¿Estás seguro de que deseas cancelar esta reserva?")) return;
-    const { error } = await supabase.from("reservas").update({ estado: "cancelada" }).eq("id", id);
-    if (!error) {
+    
+    try {
+      const { error } = await supabase.from("reservas").update({ estado: "cancelada" }).eq("id", id);
+      if (error) throw error;
+
       setReservas(prev => prev.map(r => r.id === id ? { ...r, estado: "cancelada" } : r));
+
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (user && user.email) {
+        const asunto = `Cancelación confirmada - Reserva #LETO-${id}`;
+        const contenido = `Hola,\n\nTe confirmamos que tu reserva con el localizador #LETO-${id} ha sido cancelada correctamente a través de tu panel de usuario.\n\nCualquier importe adelantado te será reembolsado según nuestra política de cancelaciones.\n\nEsperamos volver a verte pronto por Mérida.\n\nAtentamente,\nEl equipo de Hotel Leto.`;
+        
+        await emailService.enviarMensajeInformativo(user.email, asunto, contenido);
+      }
+
+      alert("Reserva cancelada con éxito. Te hemos enviado un correo con los detalles.");
+      
+    } catch (error) {
+      console.error("Error cancelando la reserva:", error);
+      alert("Hubo un error al intentar cancelar la reserva. Por favor, inténtalo de nuevo.");
     }
   };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../lib/supabaseClient";
-import { User, Mail, Phone, Edit2, Save, XCircle, LogOut, Moon, Sun } from "lucide-react";
+import { User, Mail, Phone, Edit2, Save, XCircle, LogOut, Moon, Sun, AlertTriangle } from "lucide-react";
 import { AuthInput } from "../components/auth/AuthInput";
 import Button from "../components/ui/Button";
 import { Heading, Text } from "../components/ui/Typography";
@@ -27,7 +27,7 @@ export const ProfilePage = () => {
   useEffect(() => {
     const fetchProfile = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return navigate("/login"); // Protección de ruta
+      if (!user) return navigate("/login"); 
       
       setUserId(user.id);
       const { data } = await supabase.from("profiles").select("*").eq("id", user.id).single();
@@ -57,7 +57,6 @@ export const ProfilePage = () => {
     if (error) {
       setMensaje(error.message);
     } else {
-      // Actualizamos la copia de seguridad con los nuevos datos confirmados
       setProfileData({ nombre: form.nombre, apellidos: form.apellidos, telefono: form.telefono });
       setMensaje("Perfil actualizado correctamente.");
       setIsEditing(false);
@@ -65,7 +64,7 @@ export const ProfilePage = () => {
     setLoading(false);
   };
 
-  // 3. Descartar cambios (Restaurar el formulario desde la copia de seguridad)
+  // 3. Descartar cambios
   const handleDiscard = () => {
     setForm(prev => ({ ...prev, ...profileData }));
     setIsEditing(false);
@@ -74,8 +73,22 @@ export const ProfilePage = () => {
 
   // 4. Cerrar sesión de Supabase
   const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/login");
+    try {
+      await supabase.auth.signOut();
+      
+      const currentTheme = localStorage.getItem("leto_theme");
+      
+      localStorage.clear();
+      
+      if (currentTheme) {
+        localStorage.setItem("leto_theme", currentTheme);
+      }
+      
+      navigate("/login");
+      
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
   };
 
   // 5. Alternar modo oscuro
@@ -93,20 +106,47 @@ export const ProfilePage = () => {
     }
   };
 
-  
+  // 6. Eliminar cuenta
+  const handleEliminarCuenta = async () => {
+    if (!window.confirm("¿Estás seguro de que deseas eliminar tu cuenta permanentemente? Perderás todo tu historial de reservas y esta acción no se puede deshacer.")) return;
+    
+    setLoading(true);
+    try {
+      // 1. Esto elimina en cascada todos los datos del usuario en la DB
+      const { error } = await supabase.rpc('eliminar_mi_cuenta');
+      
+      if (error) throw error;
+
+      // 2. Cerramos la sesión en el navegador
+      await supabase.auth.signOut();
+      
+      alert("Tu cuenta ha sido eliminada correctamente.");
+      
+      // 3. Redirigimos directo a la página de login
+      navigate("/login"); 
+      
+    } catch (error: any) {
+      console.error("Error al eliminar la cuenta:", error);
+        if (error.code === 'P0001' || error.message?.includes('administrador')) {
+          setMensaje("⚠️ Acción denegada: Tu cuenta tiene rol de administrador y está protegida por seguridad. No puede ser eliminada.");
+        } else {
+          setMensaje("Hubo un error al intentar eliminar tu cuenta: " + error.message);
+        }
+      } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading && !userId) return <div className="min-h-screen bg-white dark:bg-black" />;
 
   return (
-    // Fondo degradado unificado de la suite de autenticación
     <>
     <Header />
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#a33818] to-[#fed65b] p-4 font-sans">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-[#a33818] to-[#fed65b] p-4 font-sans pt-24">
       
-      {/* --- TODO CONTENIDO DENTRO DE LA TARJETA PRINCIPAL --- */}
       <div className="w-full max-w-2xl bg-white dark:bg-[var(--main-card)] p-8 md:p-10 rounded-2xl shadow-2xl border border-gray-100 dark:border-gray-900 relative">
         
-        {/* Cabecera interna: Título del Perfil, Miembro y Botón de Tema */}
+        {/* Cabecera interna */}
         <div className="flex justify-between items-start mb-8 pb-4 border-b border-gray-100 dark:border-gray-800">
           <div>
             <Heading level={2} className="text-3xl mb-1">
@@ -118,10 +158,10 @@ export const ProfilePage = () => {
           </div>
           <button 
             onClick={toggleTheme} 
-            className="p-2.5 text-gray-400 hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors cursor-pointer rounded-lg hover:bg-gray-50 dark:hover:bg-gray-900"
-            title="Alternar modo de luz"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full border-2 border-gray-200 bg-white text-gray-500 hover:bg-gray-50 hover:text-[var(--brand-rust)] dark:border-gray-700 dark:bg-transparent dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-[var(--brand-yellow)] transition-all duration-200 cursor-pointer shadow-sm"
+            title="Alternar modo visual"
           >
-            {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            {isDark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
 
@@ -134,10 +174,8 @@ export const ProfilePage = () => {
 
         {/* Formulario principal */}
         <form onSubmit={handleSave} className="space-y-6">
-
           <Text variant="muted">Datos Personales</Text>
           
-          {/* Distribución en cuadrícula de dos columnas */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-5">
             <AuthInput label="Nombre" icon={User} value={form.nombre} onChange={e => setForm({...form, nombre: e.target.value})} disabled={!isEditing} required />
             <AuthInput label="Apellidos" icon={User} value={form.apellidos} onChange={e => setForm({...form, apellidos: e.target.value})} disabled={!isEditing} required />
@@ -145,7 +183,6 @@ export const ProfilePage = () => {
             <AuthInput label="Teléfono" icon={Phone} type="tel" value={form.telefono} onChange={e => setForm({...form, telefono: e.target.value})} disabled={!isEditing} />
           </div>
 
-          {/* --- PANEL DE BOTONES DINÁMICO --- */}
           <div className="flex gap-4 pt-4 border-t border-gray-100 dark:border-gray-800/60">
             {isEditing ? (
               <>
@@ -169,21 +206,31 @@ export const ProfilePage = () => {
           </div>
         </form>
 
-        {/* --- OPCIÓN DE SALIDA INTEGRADA AL PIE DEL COMPONENTE --- */}
-        <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-800 flex justify-center">
+        <div className="mt-8 pt-6 border-t border-gray-100 dark:border-gray-800 flex flex-col-reverse sm:flex-row justify-between items-center gap-4">
+          
           <button 
             type="button"
             onClick={handleLogout} 
-            className="text-xs font-bold tracking-widest uppercase text-[var(--text-main)] hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] flex items-center gap-2 transition-colors cursor-pointer py-2 px-4 rounded-md hover:bg-gray-50 dark:hover:bg-gray-900"
+            className="w-full sm:w-auto flex justify-center items-center gap-2 py-2.5 px-4 rounded-md text-xs font-bold tracking-widest uppercase text-[var(--text-main)] hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900"
           >
             <LogOut size={16} /> Cerrar Sesión
           </button>
+          
+          <Button 
+            variant="danger" 
+            type="button" 
+            disabled={loading} 
+            onClick={handleEliminarCuenta} 
+            className="w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-6 text-xs tracking-wider uppercase"
+          >
+            <AlertTriangle size={16} /> Eliminar mi cuenta
+          </Button>
+
         </div>
 
       </div>
     </div>
     </>
-
   );
 };
 

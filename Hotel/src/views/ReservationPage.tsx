@@ -4,7 +4,7 @@ import { Calendar, User, Users, Coffee, Utensils, ShieldCheck } from "lucide-rea
 import { useRequireAuth } from "../hooks/useAuthGuards";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import { useReserva, categorias } from "../hooks/useReserva";
+import { useReserva, categorias } from "../hooks/useReservation";
 import { useNavigate } from "react-router-dom";
 
 // IMPORTACIONES DE STRIPE (Asegúrate de ajustar la ruta del CheckoutForm)

@@ -12,20 +12,20 @@ const MENU_DATA = [
   {
     label: "Reservas",
     items: [
-      { label: "Reservar habitacion", url: "/reserva" },
-      { label: "Reserva de habitacion inteligente", url: "/reserva-inteligente" },
+      { label: "Reservar habitacion", url: "/reservation" },
+      { label: "Reserva de habitacion inteligente", url: "/ai-reservation" },
       { label: "Reservar salon de eventos", url: "/reservation-event-room" },
-      { label: "Gestionar reservas", url: "/gestion-reserva" },
+      { label: "Gestionar reservas", url: "/my-reservations" },
     ],
   },
   {
     label: "Informacion",
     items: [
-      { label: "Habitaciones", url: "/info-habitaciones" },
+      { label: "Habitaciones", url: "/rooms-info" },
       { label: "Cocina", url: "/info-cocina" },
       { label: "Eventos", url: "/info-eventos" },
       { label: "Instalaciones", url: "/info-instalaciones" },
-      { label: "Historia", url: "/info-historia" },
+      { label: "Historia", url: "/history-info" },
     ],
   },
 ];
@@ -34,7 +34,7 @@ const ADMIN_MENU = {
   label: "Admin",
   items: [
     { label: "Gestión de usuarios", url: "/admin/users" },
-    { label: "Gestión de reservas", url: "/admin/gestion-reservas" },
+    { label: "Gestión de reservas", url: "/admin/reservation-management" },
     { label: "Crear usuario", url: "/admin/create-user" },
     { label: "Realizar reserva salón de eventos", url: "/admin/reservation-event-room" },
     { label: "Gestión de habitaciones", url: "/admin/rooms" },
@@ -115,7 +115,7 @@ export const Header = () => {
 
           {session ? (
             <Link 
-              to="/perfil" 
+              to="/profile" 
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--main-border)] text-[var(--text-main)] hover:bg-[var(--header-item-hover)] hover:text-[var(--brand-rust)] transition-all"
               title="Mi Perfil"
             >

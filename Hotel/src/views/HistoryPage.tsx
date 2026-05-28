@@ -2,7 +2,6 @@ import { Landmark, Castle, Shield } from "lucide-react";
 
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import ThemeToggle from "../components/ui/ThemeToggleButton";
 import { Heading, Text } from "../components/ui/Typography";
 import Button from "../components/ui/Button";
 import "../styles/global.css";
@@ -35,7 +34,6 @@ export const HistoryPage = () => {
   return (
     <div className="min-h-screen bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300">
       <Header />
-      <ThemeToggle />
 
       <main className="pt-32 pb-24">
         <div className="container-custom">
