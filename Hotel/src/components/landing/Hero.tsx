@@ -1,5 +1,3 @@
-import { Play } from 'lucide-react';
-import { Button } from '../ui/Button';
 import { Heading, Text } from '../ui/Typography';
 
 export const Hero = () => {
@@ -12,13 +10,9 @@ export const Hero = () => {
           Alojamiento en el <br/> centro histórico <br/> de Mérida
         </Heading>
         
-        <Text variant="lead" className="text-white font-light">
+        <Text variant="lead" className="text-white font-light max-w-2xl">
           Instalaciones hoteleras integradas en el entorno arqueológico de la ciudad.
         </Text>
-        
-        <Button variant="secondary" >
-          <Play className="w-4 h-4 fill-current" /> Visita Virtual
-        </Button>
       </div>
     </section>
   );

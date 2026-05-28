@@ -10,6 +10,9 @@ import ReservaPage from "./views/ReservaPage";
 import GestionReservaPage from "./views/GestionReservaPage";
 import ProfilePage from "./views/ProfilePage";
 import ReservaSalonPage from "./views/ReservaSalonPage";
+import CocinaPage from "./views/CocinaPage";
+import RoomsPage from "./views/RoomsPage";
+import EventsPage from "./views/EventsPage";
 import UserManagementPage from "./views/UserManagementPage";
 import { useEffect } from "react";
 
@@ -37,7 +40,10 @@ export const App = () => {
       <Route path="/gestion-reserva" element={<GestionReservaPage />} />
       <Route path="/perfil" element={<ProfilePage />} />
       <Route path="/reserva-salon" element={<ReservaSalonPage />} />
+      <Route path="/info-habitaciones" element={<RoomsPage />} />
+      <Route path="/info-eventos" element={<EventsPage />} />
       <Route path="/info-historia" element={<HistoryPage />} />
+      <Route path="/info-cocina" element={<CocinaPage />} />
       {/* Admin */}
       <Route path="/admin/usuarios" element={<UserManagementPage />} />
       <Route path="/admin/reservas" element={<UserManagementPage />} />

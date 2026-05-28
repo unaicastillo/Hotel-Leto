@@ -3,8 +3,6 @@ import { Hero } from '../components/landing/Hero';
 import RoomsSection from '../components/landing/RoomsSection';
 import GastronomySection from '../components/landing/GastronomySection';
 import EventsSection from '../components/landing/EventSection';
-import HistorySection from '../components/landing/HistorySection';
-import NewsletterSection from '../components/landing/NewsletterSection';
 import Footer from '../components/layout/Footer';
 import "../styles/global.css";
 
@@ -20,8 +18,6 @@ const LandingPage = () => {
       <RoomsSection />
       <GastronomySection />
       <EventsSection />
-      <HistorySection />
-      <NewsletterSection />
       <Footer />
     </div>
   );

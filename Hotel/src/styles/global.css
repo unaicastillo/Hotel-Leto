@@ -24,7 +24,7 @@
 
     --main-card: #ffffff;
     --main-border: #e5e7eb;
-    --header-bg: #f9f9f91a;
+    --header-bg: #f9f9f940;
     --header-item-hover: #f9f9f95f;
     --input-bg: #0000000a;
     --input-bg-focus: #00000014;
@@ -50,7 +50,7 @@
 
     --main-card: #0F0F0F;
     --main-border: #fff;
-    --header-bg: #0000009a;
+    --header-bg: #000000c0;
     --header-item-hover: #00000060;
                 
     --input-bg: #ffffff0d;
@@ -117,8 +117,10 @@
   .hero-wrapper { @apply relative w-full h-[85vh] min-h-[600px] flex items-center bg-cover bg-center; }
   .hero-overlay { @apply absolute inset-0 bg-gradient-to-r from-black/70 to-black/30; }
   
-  .room-card { @apply flex flex-col cursor-pointer; }
+  .room-card { @apply flex flex-col cursor-pointer overflow-hidden rounded-[1.25rem] bg-[var(--main-card)] shadow-[var(--card-shadow)] transition-all duration-300; }
+  .room-card:hover { @apply -translate-y-1; }
   .room-card:hover .room-img { @apply scale-105; }
+  .room-img-wrapper { @apply overflow-hidden aspect-[4/3] w-full bg-[var(--bg-light)]; }
   .room-img { @apply w-full h-full object-cover transition-transform duration-500; }
 
 

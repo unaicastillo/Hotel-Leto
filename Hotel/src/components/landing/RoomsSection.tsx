@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Heading, Text } from '../ui/Typography';
 
 export const RoomsSection = () => {
@@ -30,19 +31,21 @@ export const RoomsSection = () => {
             equipadas con los estándares técnicos actuales para garantizar la habitabilidad.
           </Text>
         </div>
-        <a href="#" className="link-action whitespace-nowrap dark:text-[var(--brand-yellow)]">
+        <Link to="/reserva" className="link-action whitespace-nowrap dark:text-[var(--brand-yellow)]">
           Consultar tarifas y disponibilidad <ArrowRight className="w-4 h-4" />
-        </a>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {rooms.map((room, idx) => (
-          <div key={idx} className="room-card">
+          <div key={idx} className="room-card rounded-[1.25rem] overflow-hidden bg-[var(--main-card)] shadow-[var(--card-shadow)] transition-all hover:-translate-y-1">
             <div className="room-img-wrapper">
               <img src={room.img} alt={room.title} className="room-img" />
             </div>
-            <Heading level={3} variant="card">{room.title}</Heading>
-            <Text variant="muted">{room.desc}</Text>
+            <div className="p-6">
+              <Heading level={3} variant="card" className="mb-3">{room.title}</Heading>
+              <Text variant="muted">{room.desc}</Text>
+            </div>
           </div>
         ))}
       </div>
