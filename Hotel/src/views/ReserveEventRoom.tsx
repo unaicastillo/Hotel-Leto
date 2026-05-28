@@ -7,7 +7,7 @@ import Footer from "../components/layout/Footer";
 import { useReservaSalon } from "../hooks/useReservaSalon";
 import { CheckCircle, CheckCircle2 } from "lucide-react";
 
-export const ReservaSalonPage = () => {
+export const ReserveEventRoomPage = () => {
   // Hook exclusivo para enviar los textos a EmailJS
   const { loading, enviado, errorMensaje, enviarSolicitud } = useReservaSalon();
 
@@ -198,4 +198,4 @@ export const ReservaSalonPage = () => {
   );
 };
 
-export default ReservaSalonPage;
+export default ReserveEventRoomPage;

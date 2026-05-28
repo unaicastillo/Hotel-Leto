@@ -15,7 +15,7 @@ import { CheckoutForm } from "../components/ui/CheckoutForm";
 // ⚠️ Pon tu Clave Pública de Stripe aquí
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
-export const MisReservasPage = () => {
+export const MyReservationsPage = () => {
   useRequireAuth();
   const [reservas, setReservas] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -233,4 +233,4 @@ export const MisReservasPage = () => {
   );
 };
 
-export default MisReservasPage;
+export default MyReservationsPage;

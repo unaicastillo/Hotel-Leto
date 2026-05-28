@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom';
 import { Heading, Text } from '../ui/Typography';
-import { Button } from '../ui/Button';
 
 export const GastronomySection = () => {
   return (
@@ -29,7 +29,9 @@ export const GastronomySection = () => {
               <Text variant="muted" className="text-sm">Propuestas basadas en la herencia culinaria de la región.</Text>
             </div>
           </div>
-          <Button variant="primary">Información del Restaurante</Button>
+          <Link to="/info-cocina" className="btn-primary inline-flex items-center justify-center px-8 py-3 rounded text-sm font-semibold">
+            Información del Restaurante
+          </Link>
         </div>
       </div>
     </section>

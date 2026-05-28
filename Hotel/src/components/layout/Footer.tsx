@@ -40,7 +40,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               <li><Link to="/reservation" className="text-sm text-gray-600 dark:text-gray-400 hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors">Reservar Habitación</Link></li>
               <li><Link to="/ai-reservation" className="text-sm text-gray-600 dark:text-gray-400 hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors flex items-center gap-1.5">Asistente IA Leto <span className="bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-400 text-[10px] px-1.5 py-0.5 rounded uppercase font-bold">Nuevo</span></Link></li>
-              <li><Link to="/reservation-event-room" className="text-sm text-gray-600 dark:text-gray-400 hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors">Salón de Eventos</Link></li>
+              <li><Link to="/reserve-event-room" className="text-sm text-gray-600 dark:text-gray-400 hover:text-[var(--brand-rust)] dark:hover:text-[var(--brand-yellow)] transition-colors">Salón de Eventos</Link></li>
             </ul>
           </div>
 

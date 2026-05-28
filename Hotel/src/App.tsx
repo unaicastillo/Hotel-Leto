@@ -10,15 +10,18 @@ import ReservationPage from "./views/ReservationPage";
 import AIChatPage from "./views/AIChatPage";
 import MyReservationsPage from "./views/MyReservationsPage";
 import ProfilePage from "./views/ProfilePage";
-import ReserveEventRoom from "./views/ReserveEventRoom";
 import UserManagementPage from "./views/UserManagementPage";
 import RoomManagementPage from "./views/RoomManagementPage";
 import ReservationManagementPage from "./views/ReservationManagementPage";
 import ReservationEventRoomPage from "./views/ReservationEventRoomPage";
 import CreateUserPage from "./views/CreateUserPage";
+import CocinaPage from "./views/CocinaPage";
 import VerificationPage from "./views/VerificationPage";
 import { useEffect } from "react";
-
+import EventsPage from "./views/EventsPage";
+import RoomsInfoPage from "./views/RoomsPage";
+import Reservation from "./views/ReservationPage";
+import ReserveEventRoom from "./views/ReserveEventRoom";
 
 export const App = () => {
 
@@ -39,14 +42,16 @@ export const App = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
-      <Route path="/reservation" element={<ReservationPage />} />
-      <Route path="/ai-reservation" element={<AIChatPage />} />
       <Route path="/my-reservations" element={<MyReservationsPage />} />
+      <Route path="/ai-reservation" element={<AIChatPage />} />
       <Route path="/profile" element={<ProfilePage />} />
-      <Route path="/reservation-event-room" element={<ReserveEventRoom />} />
-      <Route path="/verification" element={<VerificationPage />} />
-      {/* Informacion */} 
       <Route path="/history-info" element={<HistoryPage />} />
+      <Route path="/rooms-info" element={< RoomsInfoPage/>} />
+      <Route path="/info-cocina" element={<CocinaPage />} />
+      <Route path="/info-eventos" element={<EventsPage />} />
+      <Route path="/reservation" element={<Reservation />} />
+      <Route path="/reserve-event-room" element={<ReserveEventRoom />} />
+
       {/* Admin */}
       <Route path="/admin/users" element={<UserManagementPage />} />
       <Route path="/admin/rooms" element={<RoomManagementPage />} />
