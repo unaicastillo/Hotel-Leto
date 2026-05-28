@@ -23,11 +23,7 @@ export const MobileNav = ({ isOpen, menuItems, onClose }: Props) => {
         <MobileAccordion key={menu.label} label={menu.label} items={menu.items} onClose={onClose} />
       ))}
 
-      <NavItem 
-        item={{ label: "Contáctanos", url: "/" }} 
-        className="header__mobile-link" 
-        onClick={onClose} 
-      />
+
     </nav>
   );
 };

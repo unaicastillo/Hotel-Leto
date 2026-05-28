@@ -1,4 +1,3 @@
-import React from 'react';
 import { Calendar, Users } from 'lucide-react';
 import "../../styles/global.css";
 
@@ -19,7 +18,7 @@ export const BookingWidget: React.FC = () => (
           </div>
         ))}
       </div>
-      <button className="btn-primary w-full md:w-auto shrink-0">Consultar Disponibilidad</button>
+      <button className="btn-primary w-full md:w-auto shrink-0">Consultar disponibilidad</button>
     </div>
   </div>
 );

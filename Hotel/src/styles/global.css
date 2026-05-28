@@ -24,7 +24,7 @@
 
     --main-card: #ffffff;
     --main-border: #e5e7eb;
-    --header-bg: #f9f9f91a;
+    --header-bg: #f9f9f940;
     --header-item-hover: #f9f9f95f;
     --input-bg: #0000000a;
     --input-bg-focus: #00000014;
@@ -50,7 +50,7 @@
 
     --main-card: #0F0F0F;
     --main-border: #fff;
-    --header-bg: #0000009a;
+    --header-bg: #000000c0;
     --header-item-hover: #00000060;
                 
     --input-bg: #ffffff0d;
@@ -68,7 +68,7 @@
   body {
     font-family: 'Inter', sans-serif;
 
-    @apply bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300;
+    @apply bg-[var(--bg-light)] text-[var(--text-main)] transition-colors duration-300 pt-[77px];
 
   }
 
@@ -76,7 +76,7 @@
     font-family: var(--font-antiqua);
   }
 
-  label { @apply block text-xs text-gray-500 font-medium}
+  label { @apply block text-xs text-gray-500 font-medium; }
 
 
 }
@@ -89,7 +89,7 @@
   }
   
   .btn-secondary {
-    @apply bg-[var(--brand-yellow)] text-[var(--text-main)] px-8 py-3 rounded hover:bg-[var(--brand-yellow-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
+    @apply bg-[var(--brand-yellow)] text-black px-8 py-3 rounded hover:bg-[var(--brand-yellow-hover)] transition-colors text-sm font-semibold inline-flex items-center justify-center cursor-pointer;
   }
 
   .btn-info {
@@ -117,8 +117,10 @@
   .hero-wrapper { @apply relative w-full h-[85vh] min-h-[600px] flex items-center bg-cover bg-center; }
   .hero-overlay { @apply absolute inset-0 bg-gradient-to-r from-black/70 to-black/30; }
   
-  .room-card { @apply flex flex-col cursor-pointer; }
+  .room-card { @apply flex flex-col cursor-pointer overflow-hidden rounded-[1.25rem] bg-[var(--main-card)] shadow-[var(--card-shadow)] transition-all duration-300; }
+  .room-card:hover { @apply -translate-y-1; }
   .room-card:hover .room-img { @apply scale-105; }
+  .room-img-wrapper { @apply overflow-hidden aspect-[4/3] w-full bg-[var(--bg-light)]; }
   .room-img { @apply w-full h-full object-cover transition-transform duration-500; }
 
 
@@ -128,7 +130,7 @@
 
 
 
-  .header { @apply fixed top-0 z-50 w-full flex flex-col bg-[var(--header-bg)] backdrop-blur-md shadow-sm border-b border-b-gray-800; font-family: var(--font-sans); }
+  .header { @apply fixed top-0 z-50 w-full flex flex-col bg-[var(--header-bg)] backdrop-blur-md shadow-sm border-b border-b-gray-800 ; font-family: var(--font-sans); }
   .header__bar { @apply flex items-center justify-between w-full mx-auto py-4 px-6 md:px-8; }
   .header__logo img { @apply block h-[44px] w-auto; }
   .header__right { @apply flex items-center gap-4; }
@@ -141,7 +143,7 @@
   .header__dropdown-arrow { @apply shrink-0 transition-transform duration-300; }
   .header__nav-link--open .header__dropdown-arrow { @apply rotate-180 text-[var(--brand-rust-hover)]; }
   .header__dropdown-menu { @apply absolute top-full left-0 z-50 min-w-[240px] bg-white border border-[var(--border-light)] rounded-sm shadow-xl overflow-hidden mt-1; }
-  .header__dropdown-item { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[var(--text-muted)] border-b transition-colors hover:bg-slate-50 hover:text-[var(--brand-rust)] last:border-none; }
+  .header__dropdown-item { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[#1a1818] border-b transition-colors hover:bg-slate-50 last:border-none; }
   .header__cart { @apply flex items-center justify-center p-3 bg-[var(--accent-industrial)] rounded-sm shadow-sm cursor-pointer transition-colors hover:bg-[var(--accent-industrial-hover)]; }
   .header__hamburger { @apply hidden max-lg:flex flex-col gap-1.5 p-2 bg-transparent cursor-pointer z-50 border rounded-sm; }
   .header__hamburger-line { @apply block w-5 h-[2px] bg-[var(--text-main)] transition-all duration-300 origin-center; }
@@ -157,8 +159,7 @@
   .header__mobile-submenu { @apply bg-[var(--header-bg)] border-t; }
   .header__mobile-submenu-item { @apply block py-3 px-8 text-xs font-bold uppercase tracking-widest text-[var(--text-body)] transition-colors hover:text-[var(--brand-rust-hover)]; }
 
-  /* THEME TOGGLE */
-  .header__theme-toggle { @apply inline-flex absolute top-[calc(874px+92vh)] left-5 items-center justify-center w-9 h-9 rounded-sm bg-slate-100 border border-[var(--border-light)] text-[var(--text-main)] cursor-pointer transition-all hover:bg-slate-200; }
+  .header__theme-toggle { @apply inline-flex absolute left-5 items-center justify-center w-9 h-9 rounded-sm bg-slate-100 border border-[var(--border-light)] text-[var(--text-main)] cursor-pointer transition-all hover:bg-slate-200; }
   .header__theme-toggle--fixed { @apply fixed top-[92vh] right-5 z-[999] left-auto shadow-md; }
   .header__theme-toggle { @apply bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700; }
 

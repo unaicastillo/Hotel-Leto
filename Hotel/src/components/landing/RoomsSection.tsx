@@ -1,22 +1,22 @@
-import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Heading, Text } from '../ui/Typography';
 
 export const RoomsSection = () => {
   const rooms = [
     {
-      title: "Suite Imperial",
-      desc: "El lujo romano en todo su esplendor. Cama king size, terraza privada y baño de mármol.",
+      title: "Suite Premium",
+      desc: "Equipamiento de categoría superior que incluye cama tamaño king size, zona de estar separada y baño acabado en mármol.",
       img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?q=80&w=1974&auto=format&fit=crop"
     },
     {
-      title: "Doble Augusta",
-      desc: "Equilibrio perfecto entre espacio y comodidad para estancias relajantes.",
+      title: "Habitación Doble Estándar",
+      desc: "Espacio funcional y climatizado, diseñado para optimizar el alojamiento en estancias de corta y media duración.",
       img: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=1974&auto=format&fit=crop"
     },
     {
-      title: "Superior Letoh",
-      desc: "Diseño elegante, iluminación cálida y todos los detalles para una estancia superior.",
+      title: "Habitación Doble Superior",
+      desc: "Mayor amplitud espacial y equipamiento mobiliario adicional, adecuado tanto para perfiles corporativos como vacacionales.",
       img: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?q=80&w=2070&auto=format&fit=crop"
     }
   ];
@@ -25,25 +25,27 @@ export const RoomsSection = () => {
     <section className="py-24 container-custom">
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div className="max-w-2xl">
-          <Heading level={2} variant="section">Habitaciones & Suites</Heading>
+          <Heading level={2} variant="section">Tipologías de Alojamiento</Heading>
           <Text variant="lead" className="mb-0">
-            Espacios diseñados para tu confort moderno en un alma de la antigua Roma. 
-            Cada detalle pensado para un descanso perfecto.
+            El hotel dispone de diversas tipologías de habitaciones y suites 
+            equipadas con los estándares técnicos actuales para garantizar la habitabilidad.
           </Text>
         </div>
-        <a href="#" className="link-action whitespace-nowrap dark:text-[var(--brand-yellow)]">
-          Ver todas las opciones <ArrowRight className="w-4 h-4" />
-        </a>
+        <Link to="/reservation" className="link-action whitespace-nowrap dark:text-[var(--brand-yellow)]">
+          Consultar tarifas y disponibilidad <ArrowRight className="w-4 h-4" />
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {rooms.map((room, idx) => (
-          <div key={idx} className="room-card">
+          <div key={idx} className="room-card rounded-[1.25rem] overflow-hidden bg-[var(--main-card)] shadow-[var(--card-shadow)] transition-all hover:-translate-y-1">
             <div className="room-img-wrapper">
               <img src={room.img} alt={room.title} className="room-img" />
             </div>
-            <Heading level={3} variant="card">{room.title}</Heading>
-            <Text variant="muted">{room.desc}</Text>
+            <div className="p-6">
+              <Heading level={3} variant="card" className="mb-3">{room.title}</Heading>
+              <Text variant="muted">{room.desc}</Text>
+            </div>
           </div>
         ))}
       </div>

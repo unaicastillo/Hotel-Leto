@@ -1,53 +1,94 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { User } from "lucide-react"; // Importamos el icono de usuario
-import { supabase } from "../../lib/supabaseClient"; // Ajusta esta ruta según tu estructura
+import { User } from "lucide-react"; 
+import { supabase } from "../../lib/supabaseClient"; 
 import { DesktopNav } from "./header_components/DesktopNav";
 import { MobileNav } from "./header_components/MobileNav";
 import logo from "../../imgs/logo_temporal.png";
 import Button from "../ui/Button";
 
+// Menú principal para todos los usuarios
 const MENU_DATA = [
   {
     label: "Reservas",
     items: [
-      { label: "Reservar habitacion", url: "/reserva" },
-      { label: "Reservar salon de eventos", url: "/reserva-salón" },
-      { label: "Gestionar reservas", url: "/gestion-reserva" },
+      { label: "Reservar habitacion", url: "/reservation" },
+      { label: "Reserva de habitacion inteligente", url: "/ai-reservation" },
+      { label: "Reservar salon de eventos", url: "/reserve-event-room" },
+      { label: "Gestionar reservas", url: "/my-reservations" },
     ],
   },
   {
     label: "Informacion",
     items: [
-      { label: "Habitaciones", url: "/info-habitaciones" },
+      { label: "Habitaciones", url: "/rooms-info" },
       { label: "Cocina", url: "/info-cocina" },
       { label: "Eventos", url: "/info-eventos" },
-      { label: "Instalaciones", url: "/info-instalaciones" },
-      { label: "Historia", url: "/info-historia" },
+      { label: "Historia", url: "/history-info" },
     ],
   },
 ];
 
+const ADMIN_MENU = {
+  label: "Admin",
+  items: [
+    { label: "Gestión de usuarios", url: "/admin/users" },
+    { label: "Gestión de reservas", url: "/admin/reservation-management" },
+    { label: "Crear usuario", url: "/admin/create-user" },
+    { label: "Realizar reserva salón de eventos", url: "/admin/reservation-event-room" },
+    { label: "Gestión de habitaciones", url: "/admin/rooms" },
+  ],
+};
+
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para saber si es administrador
 
   useEffect(() => {
-    // 1. Obtener la sesión actual al cargar el Header
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-    });
+    // Función para obtener sesión y verificar rol
+    const fetchSessionAndRole = async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      setSession(currentSession);
+      
+      if (currentSession?.user) {
+        checkRole(currentSession.user.id);
+      }
+    };
 
-    // 2. Escuchar cambios de autenticación (cuando hace login o logout)
+    fetchSessionAndRole();
+
+    // Escuchar cambios de autenticación
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, currentSession) => {
       setSession(currentSession);
+      if (currentSession?.user) {
+        checkRole(currentSession.user.id);
+      } else {
+        setIsAdmin(false); // Si cierra sesión, deja de ser admin
+      }
     });
 
-    // Limpiar la suscripción al desmontar
     return () => subscription.unsubscribe();
   }, []);
+
+  // Consulta a Supabase para verificar si el usuario es "admin"
+  const checkRole = async (userId: string) => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", userId)
+      .single();
+      
+    setIsAdmin(data?.role === "admin");
+  };
+
+  // Construimos el menú dinámicamente. 
+  // Si es admin, añade el bloque de Admin al final. Si no, usa el normal.
+  const dynamicMenuItems = useMemo(() => {
+    return isAdmin ? [...MENU_DATA, ADMIN_MENU] : MENU_DATA;
+  }, [isAdmin]);
 
   return (
     <header className="header">
@@ -57,8 +98,8 @@ export const Header = () => {
           <img src={logo} alt="logo hotel leto" />
         </Link>
 
-        {/* Desktop Navigation */}
-        <DesktopNav menuItems={MENU_DATA} />
+        {/* Desktop Navigation - Le pasamos el menú dinámico */}
+        <DesktopNav menuItems={dynamicMenuItems} />
 
         {/* Action Buttons */}
         <div className="header__right">
@@ -71,10 +112,9 @@ export const Header = () => {
             <span className="header__hamburger-line" />
           </button>
 
-          {/* Renderizado condicional de Autenticación */}
           {session ? (
             <Link 
-              to="/perfil" 
+              to="/profile" 
               className="flex items-center justify-center w-10 h-10 rounded-full border border-[var(--main-border)] text-[var(--text-main)] hover:bg-[var(--header-item-hover)] hover:text-[var(--brand-rust)] transition-all"
               title="Mi Perfil"
             >
@@ -88,10 +128,10 @@ export const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
+      {/* Mobile Navigation Menu - Le pasamos el menú dinámico */}
       <MobileNav 
         isOpen={isMobileMenuOpen} 
-        menuItems={MENU_DATA} 
+        menuItems={dynamicMenuItems} 
         onClose={() => setIsMobileMenuOpen(false)} 
       />
 
