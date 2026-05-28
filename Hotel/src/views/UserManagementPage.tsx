@@ -8,7 +8,6 @@ import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 
 export const UserManagementPage = () => {
-  // Extraemos toda la lógica y estados desde nuestro Custom Hook
     useRequireAdmin();
     const { isCheckingAdmin } = useRequireAdmin();
   const {
