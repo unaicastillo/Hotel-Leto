@@ -28,6 +28,9 @@ La aplicación se encuentra completamente desplegada y funcional. Puedes acceder
 
 🔗 **[https://h-leto.vercel.app/](https://h-leto.vercel.app/)**
 
+Enlace al repositorio de vercel:
+**[h-leto-emqxm30i2-darios-projects-cd978e8d.vercel.app/](h-leto-emqxm30i2-darios-projects-cd978e8d.vercel.app)**
+
 ### 🔐 Credenciales de Acceso
 
 Para evaluar todas las funcionalidades del sistema sin necesidad de registrarte, puedes utilizar las siguientes credenciales de prueba configuradas en la base de datos:
