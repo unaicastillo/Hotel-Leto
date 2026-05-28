@@ -56,14 +56,6 @@ export default function RoomManagementPage() {
               Administración del estado operativo y disponibilidad del hotel.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2 w-full md:w-auto">
-            <button className="flex-1 md:flex-none px-4 py-2 bg-[var(--brand-rust)] text-white rounded-md text-xs sm:text-sm font-medium hover:bg-[var(--brand-rust-hover)] transition-colors cursor-pointer text-center">
-              Listado General
-            </button>
-            <button className="flex-1 md:flex-none px-4 py-2 bg-[var(--main-card)] border border-[var(--main-border)] text-[var(--text-main)] rounded-md text-xs sm:text-sm font-medium hover:bg-[var(--input-bg)] transition-colors cursor-pointer text-center">
-              Historial de Bajas
-            </button>
-          </div>
         </div>
 
         {/* STATS */}
@@ -92,17 +84,27 @@ export default function RoomManagementPage() {
           {/* LEFT SIDE: FILTERS & TABLE */}
           <div className="p-4 sm:p-6 lg:p-10 overflow-y-auto border-b lg:border-b-0 lg:border-r border-[var(--main-border)] bg-[var(--main-card)]">
             {/* Filters */}
-            <div className="flex mb-6">
+            <div className="flex mb-6 justify-between items-center">
               <div className="relative w-full max-w-md">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] z-10" size={18} />
                 <input 
                   type="text" 
                   value={filtros.id}
-                  onChange={(e) => setFiltros({...filtros, id: e.target.value})}
+                  onChange={(e) => setFiltros({ ...filtros, id: e.target.value })}
                   placeholder="Buscar por ID de Habitación" 
                   className="input-primary !py-2.5 !pl-10 w-full text-sm"
                 />
               </div>
+              <select 
+                value={filtros.type}
+                onChange={(e) => setFiltros({ ...filtros, type: e.target.value })}
+                className="input-primary !py-2.5 cursor-pointer w-full sm:w-auto bg-[var(--main-card)] text-[var(--text-main)]"
+              >
+                <option value="">Todos los tipos</option>
+                <option value="simple">Simple (Individual)</option>
+                <option value="doble">Doble</option>
+                <option value="suite">Suite</option>
+              </select>
             </div>
 
             {/* Table wrapper for mobile scrolling */}
@@ -156,7 +158,7 @@ export default function RoomManagementPage() {
           <div className="p-4 sm:p-6 lg:p-8 bg-[var(--main-card)] flex flex-col gap-6 overflow-y-auto">
             <h3 className="text-xl sm:text-2xl border-b-2 border-[var(--brand-yellow)] pb-2 text-[var(--text-main)]" style={{ fontFamily: 'var(--font-antiqua)' }}>
               Gestión de Estado
-              {habitacionSeleccionada && <span className="text-[var(--brand-rust)] ml-2">({habitacionSeleccionada.id})</span>}
+              {habitacionSeleccionada && <span className="text-[var(--brand-rust)] ml-2">#{habitacionSeleccionada.id}</span>}
             </h3>
             
             {!habitacionSeleccionada ? (

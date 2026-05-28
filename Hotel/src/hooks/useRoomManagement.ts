@@ -55,9 +55,23 @@ export const useRoomManagement = () => {
 
   // --- FILTRADO (Solo por ID según la nueva vista) ---
   const habitacionesFiltradas = useMemo(() => {
-    return habitaciones.filter(h => 
-      h.id.toString().includes(filtros.id)
-    );
+    return habitaciones.filter(h => {
+      // 1. Comprobar si coincide el ID
+      const coincideId = h.id.toString().includes(filtros.id.trim());
+
+      // 2. Si no hay tipo seleccionado, pasa el filtro de ID directo
+      if (!filtros.type) return coincideId;
+
+      // 3. Comprobar si coincide el tipo (normalizando mayúsculas/minúsculas)
+      const tipoFiltro = filtros.type.toLowerCase();
+      const tipoHabitacion = h.type.toLowerCase(); // Viene como 'Individual', 'Doble', 'Suite'
+
+      const coincideTipo = 
+        tipoHabitacion === tipoFiltro || 
+        (tipoFiltro === 'simple' && tipoHabitacion === 'individual');
+
+      return coincideId && coincideTipo;
+    });
   }, [habitaciones, filtros]);
 
   // --- 2. VERIFICAR CONFLICTOS Y REUBICAR ---

@@ -28,9 +28,6 @@ export default function ReservationEventRoomPage() {
               </h1>
               <p className="text-[var(--text-muted)] text-sm">Gestión administrativa y reserva de espacios.</p>
             </div>
-            <button onClick={() => window.history.back()} className="hidden md:flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--brand-rust)] transition-colors cursor-pointer">
-              <ArrowLeft size={16} /> Volver
-            </button>
           </div>
 
           {mensaje.texto && (

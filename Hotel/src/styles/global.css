@@ -24,8 +24,8 @@
 
     --main-card: #ffffff;
     --main-border: #e5e7eb;
-    --header-bg: #f9f9f91a;
-    --header-item-hover: #f9f9f95f;
+    --header-bg: #fdfbf798;
+    --header-item-hover: #f3eee296;
     --input-bg: #0000000a;
     --input-bg-focus: #00000014;
     --overlay-bg: rgba(0, 0, 0, 0.6);
@@ -141,7 +141,7 @@
   .header__dropdown-arrow { @apply shrink-0 transition-transform duration-300; }
   .header__nav-link--open .header__dropdown-arrow { @apply rotate-180 text-[var(--brand-rust-hover)]; }
   .header__dropdown-menu { @apply absolute top-full left-0 z-50 min-w-[240px] bg-white border border-[var(--border-light)] rounded-sm shadow-xl overflow-hidden mt-1; }
-  .header__dropdown-item { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[var(--text-muted)] border-b transition-colors hover:bg-slate-50 hover:text-[var(--brand-rust)] last:border-none; }
+  .header__dropdown-item { @apply block py-4 px-6 text-xs font-bold tracking-widest uppercase text-[#1a1818] border-b transition-colors hover:bg-slate-50 last:border-none; }
   .header__cart { @apply flex items-center justify-center p-3 bg-[var(--accent-industrial)] rounded-sm shadow-sm cursor-pointer transition-colors hover:bg-[var(--accent-industrial-hover)]; }
   .header__hamburger { @apply hidden max-lg:flex flex-col gap-1.5 p-2 bg-transparent cursor-pointer z-50 border rounded-sm; }
   .header__hamburger-line { @apply block w-5 h-[2px] bg-[var(--text-main)] transition-all duration-300 origin-center; }
