@@ -157,9 +157,8 @@
   .header__mobile-submenu { @apply bg-[var(--header-bg)] border-t; }
   .header__mobile-submenu-item { @apply block py-3 px-8 text-xs font-bold uppercase tracking-widest text-[var(--text-body)] transition-colors hover:text-[var(--brand-rust-hover)]; }
 
-  /* THEME TOGGLE */
-  /* .header__theme-toggle { @apply inline-flex absolute left-5 items-center justify-center w-9 h-9 rounded-sm bg-slate-100 border border-[var(--border-light)] text-[var(--text-main)] cursor-pointer transition-all hover:bg-slate-200; }
+  .header__theme-toggle { @apply inline-flex absolute left-5 items-center justify-center w-9 h-9 rounded-sm bg-slate-100 border border-[var(--border-light)] text-[var(--text-main)] cursor-pointer transition-all hover:bg-slate-200; }
   .header__theme-toggle--fixed { @apply fixed top-[92vh] right-5 z-[999] left-auto shadow-md; }
-  .header__theme-toggle { @apply bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700; } */
+  .header__theme-toggle { @apply bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700; }
 
 }

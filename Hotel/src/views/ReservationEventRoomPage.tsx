@@ -2,8 +2,11 @@ import { CalendarDays, Mail, Banknote, Info, BellRing, Building, ArrowLeft } fro
 import Header from '../components/layout/Header';
 import Footer from '../components/layout/Footer';
 import { useReservationEventRoom } from '../hooks/useReservationEventRoom';
+import { useRequireAdmin } from '../hooks/useAuthGuards';
 
 export default function ReservationEventRoomPage() {
+    useRequireAdmin();
+
   const { 
     formData, 
     handleChange, 

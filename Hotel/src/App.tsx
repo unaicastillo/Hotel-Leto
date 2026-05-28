@@ -8,14 +8,15 @@ import ForgotPasswordPage from "./views/ForgotPasswordPage";
 import UpdatePasswordPage from "./views/UpdatePasswordPage";
 import ReservationPage from "./views/ReservationPage";
 import AIChatPage from "./views/AIChatPage";
-import GestionReservaPage from "./views/GestionReservaPage";
+import MyReservationsPage from "./views/MyReservationsPage";
 import ProfilePage from "./views/ProfilePage";
-import ReservaSalonPage from "./views/ReservaSalonPage";
+import ReserveEventRoom from "./views/ReserveEventRoom";
 import UserManagementPage from "./views/UserManagementPage";
 import RoomManagementPage from "./views/RoomManagementPage";
 import ReservationManagementPage from "./views/ReservationManagementPage";
 import ReservationEventRoomPage from "./views/ReservationEventRoomPage";
 import CreateUserPage from "./views/CreateUserPage";
+import VerificationPage from "./views/VerificationPage";
 import { useEffect } from "react";
 
 
@@ -38,19 +39,20 @@ export const App = () => {
       <Route path="/register" element={<RegisterPage />} />
       <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       <Route path="/update-password" element={<UpdatePasswordPage />} />
-      <Route path="/reserva" element={<ReservationPage />} />
-      <Route path="/reserva-inteligente" element={<AIChatPage />} />
-      <Route path="/gestion-reserva" element={<GestionReservaPage />} />
-      <Route path="/perfil" element={<ProfilePage />} />
-      <Route path="/reservation-event-room" element={<ReservaSalonPage />} />
-      <Route path="/info-historia" element={<HistoryPage />} />
+      <Route path="/reservation" element={<ReservationPage />} />
+      <Route path="/ai-reservation" element={<AIChatPage />} />
+      <Route path="/my-reservations" element={<MyReservationsPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
+      <Route path="/reservation-event-room" element={<ReserveEventRoom />} />
+      <Route path="/verification" element={<VerificationPage />} />
+      {/* Informacion */} 
+      <Route path="/history-info" element={<HistoryPage />} />
       {/* Admin */}
       <Route path="/admin/users" element={<UserManagementPage />} />
       <Route path="/admin/rooms" element={<RoomManagementPage />} />
-      <Route path="/admin/gestion-reservas" element={<ReservationManagementPage />} />
+      <Route path="/admin/reservation-management" element={<ReservationManagementPage />} />
       <Route path="/admin/reservation-event-room" element={<ReservationEventRoomPage />} />
       <Route path="/admin/create-user" element={<CreateUserPage />} />
-      <Route path="/admin/habitaciones" element={<UserManagementPage />} />
     </Routes> 
   )
 }
